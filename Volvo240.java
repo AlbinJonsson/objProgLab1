@@ -12,7 +12,8 @@ public class Volvo240 extends Car{
         stopEngine();
 
     }
-    
+
+    @Override
     public double speedFactor(){
         return enginePower * 0.01 * trimFactor;
     }
@@ -27,20 +28,18 @@ public class Volvo240 extends Car{
 
 
 
-    // TODO fix this method according to lab pm
     public void gas(double amount){
-        incrementSpeed(amount);
+        if (0 <= amount && amount <= 1){
+            incrementSpeed(amount);
+        }else
+            throw new IllegalArgumentException("Amount between 0 and 1");
     }
 
-    // TODO fix this method according to lab pm
+
     public void brake(double amount){
-        decrementSpeed(amount);
-    }
-}
-
-class test{
-    private void main(){
-        Volvo240 ajdiwjdi2 = new Volvo240();
-        ajdiwjdi2.brake(2);
+        if (0 <= amount && amount <= 1){
+            decrementSpeed(amount);
+        }else
+            throw new IllegalArgumentException("Amount between 0 and 1");
     }
 }
