@@ -41,5 +41,6 @@ public class Volvo240 extends Car{
 class test{
     private void main(){
         Volvo240 ajdiwjdi2 = new Volvo240();
+        ajdiwjdi2.brake(2);
     }
 }
