@@ -43,6 +43,7 @@ public class Saab95 extends Car{
             incrementSpeed(amount);
         }else
             throw new IllegalArgumentException("Amount between 0 and 1");
+        // try and catch method
     }
 
     // TODO fix this method according to lab pm

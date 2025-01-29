@@ -5,7 +5,7 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VolvoTest {
+class   VolvoTest {
 
     Volvo240 volvo;
 
