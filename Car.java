@@ -74,37 +74,56 @@ public abstract class Car implements Movable{
 
 
 
-    public void move(){
-        if (this.currentDirection.equals(Direction.NORTH))
-            y+= this.currentSpeed;
-        else if (this.currentDirection.equals(Direction.WEST))
-            x-=this.currentSpeed;
-        else if (this.currentDirection.equals(Direction.SOUTH))
-            y-= this.currentSpeed;
-        else if (this.currentDirection.equals(Direction.EAST))
-            x+= this.currentSpeed;
-    };
+    public void move() {
+        switch (this.currentDirection) {
+            case NORTH -> y += this.currentSpeed;
+            case WEST -> x -= this.currentSpeed;
+            case SOUTH -> y -= this.currentSpeed;
+            case EAST -> x += this.currentSpeed;
+        }
+    }
+//        if (this.currentDirection.equals(Direction.NORTH))
+//            y+= this.currentSpeed;
+//        else if (this.currentDirection.equals(Direction.WEST))
+//            x-=this.currentSpeed;
+//        else if (this.currentDirection.equals(Direction.SOUTH))
+//            y-= this.currentSpeed;
+//        else if (this.currentDirection.equals(Direction.EAST))
+//            x+= this.currentSpeed;
+//    };
 
     public void turnLeft(){
-        if (this.currentDirection.equals(Direction.NORTH))
-            this.currentDirection = Direction.WEST;
-        else if (this.currentDirection.equals(Direction.WEST))
-            this.currentDirection = Direction.SOUTH;
-        else if (this.currentDirection.equals(Direction.SOUTH))
-            this.currentDirection = Direction.EAST;
-        else if (this.currentDirection.equals(Direction.EAST))
-            this.currentDirection = Direction.NORTH;
+        switch (this.currentDirection){
+            case NORTH -> this.currentDirection = Direction.WEST;
+            case WEST -> this.currentDirection = Direction.SOUTH;
+            case SOUTH -> this.currentDirection = Direction.EAST;
+            case EAST -> this.currentDirection = Direction.NORTH;
+        }
+//        if (this.currentDirection.equals(Direction.NORTH))
+//            this.currentDirection = Direction.WEST;
+//        else if (this.currentDirection.equals(Direction.WEST))
+//            this.currentDirection = Direction.SOUTH;
+//        else if (this.currentDirection.equals(Direction.SOUTH))
+//            this.currentDirection = Direction.EAST;
+//        else if (this.currentDirection.equals(Direction.EAST))
+//            this.currentDirection = Direction.NORTH;
     };
 
     public void turnRight(){
-        if (this.currentDirection.equals(Direction.NORTH)){
-            this.currentDirection = Direction.EAST;
-        }else if (this.currentDirection.equals(Direction.EAST)){
-            this.currentDirection = Direction.SOUTH;
-        } else if (this.currentDirection.equals(Direction.SOUTH)) {
-            this.currentDirection = Direction.WEST;
-        } else if (this.currentDirection.equals(Direction.WEST)) {
-            this.currentDirection = Direction.NORTH;
+        switch (this.currentDirection){
+            case NORTH -> this.currentDirection = Direction.EAST;
+            case EAST -> this.currentDirection = Direction.SOUTH;
+            case SOUTH -> this.currentDirection = Direction.WEST;
+            case WEST -> this.currentDirection = Direction.NORTH;
         }
+//        if (this.currentDirection.equals(Direction.NORTH)){
+//            this.currentDirection = Direction.EAST;
+//        }else if (this.currentDirection.equals(Direction.EAST)){
+//            this.currentDirection = Direction.SOUTH;
+//        } else if (this.currentDirection.equals(Direction.SOUTH)) {
+//            this.currentDirection = Direction.WEST;
+//        } else if (this.currentDirection.equals(Direction.WEST)) {
+//            this.currentDirection = Direction.NORTH;
+//        }
     };
 }
