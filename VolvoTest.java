@@ -96,6 +96,22 @@ class   VolvoTest {
     }
 
     @Test
+    void moveXDirection() {
+
+        volvo.turnRight();
+        volvo.incrementSpeed(10);
+
+        volvo.move();
+        volvo.move();
+        volvo.move();
+        volvo.move();
+
+        assertEquals(50, volvo.getCurrentXLocation());
+
+
+    }
+
+    @Test
     void turnLeft() {
 
         volvo.turnLeft();

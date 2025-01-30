@@ -3,7 +3,7 @@ import java.awt.*;
 public abstract class Car implements Movable{
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
-    public double currentSpeed; // The current speed of the car
+    protected double currentSpeed; // The current speed of the car
     protected Color color; // Color of the car
     protected String modelName; // The car model name
     private double x;
@@ -40,6 +40,10 @@ public abstract class Car implements Movable{
         return y;
     }
 
+    public double getCurrentXLocation(){
+        return x;
+    }
+
     public String getCurrentDirection(){
         return currentDirection.toString();
     }
@@ -54,7 +58,7 @@ public abstract class Car implements Movable{
         return color;
     }
 
-    public void setColor(Color clr){
+    protected void setColor(Color clr){
         color = clr;
     }
 
@@ -73,7 +77,7 @@ public abstract class Car implements Movable{
     abstract void decrementSpeed(double currentSpeed);
 
 
-
+    @Override
     public void move() {
         switch (this.currentDirection) {
             case NORTH -> y += this.currentSpeed;
@@ -82,16 +86,8 @@ public abstract class Car implements Movable{
             case EAST -> x += this.currentSpeed;
         }
     }
-//        if (this.currentDirection.equals(Direction.NORTH))
-//            y+= this.currentSpeed;
-//        else if (this.currentDirection.equals(Direction.WEST))
-//            x-=this.currentSpeed;
-//        else if (this.currentDirection.equals(Direction.SOUTH))
-//            y-= this.currentSpeed;
-//        else if (this.currentDirection.equals(Direction.EAST))
-//            x+= this.currentSpeed;
-//    };
 
+    @Override
     public void turnLeft(){
         switch (this.currentDirection){
             case NORTH -> this.currentDirection = Direction.WEST;
@@ -99,16 +95,9 @@ public abstract class Car implements Movable{
             case SOUTH -> this.currentDirection = Direction.EAST;
             case EAST -> this.currentDirection = Direction.NORTH;
         }
-//        if (this.currentDirection.equals(Direction.NORTH))
-//            this.currentDirection = Direction.WEST;
-//        else if (this.currentDirection.equals(Direction.WEST))
-//            this.currentDirection = Direction.SOUTH;
-//        else if (this.currentDirection.equals(Direction.SOUTH))
-//            this.currentDirection = Direction.EAST;
-//        else if (this.currentDirection.equals(Direction.EAST))
-//            this.currentDirection = Direction.NORTH;
-    };
+    }
 
+    @Override
     public void turnRight(){
         switch (this.currentDirection){
             case NORTH -> this.currentDirection = Direction.EAST;
@@ -116,14 +105,20 @@ public abstract class Car implements Movable{
             case SOUTH -> this.currentDirection = Direction.WEST;
             case WEST -> this.currentDirection = Direction.NORTH;
         }
-//        if (this.currentDirection.equals(Direction.NORTH)){
-//            this.currentDirection = Direction.EAST;
-//        }else if (this.currentDirection.equals(Direction.EAST)){
-//            this.currentDirection = Direction.SOUTH;
-//        } else if (this.currentDirection.equals(Direction.SOUTH)) {
-//            this.currentDirection = Direction.WEST;
-//        } else if (this.currentDirection.equals(Direction.WEST)) {
-//            this.currentDirection = Direction.NORTH;
-//        }
-    };
+    }
+
+    protected void gas(double amount){
+        if (0 <= amount && amount <= 1){
+            incrementSpeed(amount);
+        }else
+            throw new IllegalArgumentException("Amount between 0 and 1");
+    }
+
+
+    protected void brake(double amount){
+        if (0 <= amount && amount <= 1){
+            decrementSpeed(amount);
+        }else
+            throw new IllegalArgumentException("Amount between 0 and 1");
+    }
 }

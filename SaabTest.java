@@ -90,14 +90,15 @@ class SaabTest {
 
     @Test
     void decrementSpeedTurboOn() {
+        saab95.setTurboOn();
         saab95.incrementSpeed(10);
         saab95.decrementSpeed(5);
 
-        assertEquals(6.25, saab95.getCurrentSpeed());
+        assertEquals(8.125, saab95.getCurrentSpeed());
     }
 
     @Test
-    void move() {
+    void moveYDirection() {
 
         saab95.incrementSpeed(10);
 
@@ -109,6 +110,20 @@ class SaabTest {
         assertEquals(50, saab95.getCurrentYLocation());
 
 
+    }
+
+    @Test
+    void moveXDirection() {
+
+        saab95.turnRight();
+        saab95.incrementSpeed(10);
+
+        saab95.move();
+        saab95.move();
+        saab95.move();
+        saab95.move();
+
+        assertEquals(50, saab95.getCurrentXLocation());
     }
 
     @Test
