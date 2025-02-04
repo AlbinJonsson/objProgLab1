@@ -6,11 +6,11 @@ public abstract class Car implements Movable{
     protected double currentSpeed; // The current speed of the car
     protected Color color; // Color of the car
     protected String modelName; // The car model name
-    private double x;
-    private double y;
+    protected double x;
+    protected double y;
     private Direction currentDirection;
 
-    private enum Direction {
+    public enum Direction {
         NORTH,
         WEST,
         SOUTH,
@@ -44,9 +44,14 @@ public abstract class Car implements Movable{
         return x;
     }
 
-    public String getCurrentDirection(){
-        return currentDirection.toString();
+    public Direction getCurrentDirection(){
+        return currentDirection;
     }
+
+//    public String getCurrentDirection(){
+//        return currentDirection.toString();
+//    }
+
 
     public double getCurrentSpeed(){
         return currentSpeed;
