@@ -2,14 +2,14 @@ import java.awt.*;
 
 public class Scania extends Car {
 
+    private final Volvo240 helper = new Volvo240();  // Composition
     private int flakAngle;
-    private int speed;
+
 
     public Scania() {
         super("Scania", Color.pink, 0, 200, 2);
         stopEngine();
         this.flakAngle = 0;
-        this.speed = 0;
     }
 
     // Raise the flak
@@ -42,16 +42,16 @@ public class Scania extends Car {
 
     @Override
     double speedFactor() {
-        return 0;
+        return helper.speedFactor();
     }
 
     @Override
     void incrementSpeed(double currentSpeed) {
-
+        helper.incrementSpeed(currentSpeed);
     }
 
     @Override
     void decrementSpeed(double currentSpeed) {
-
+        helper.decrementSpeed(currentSpeed);
     }
 }
