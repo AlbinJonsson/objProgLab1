@@ -3,6 +3,7 @@ import java.awt.*;
 public class Scania extends Car {
 
     private final Volvo240 helper = new Volvo240();  // Composition
+    private Volvo240 volvo;  // composition
     private int flakAngle;
 
 
