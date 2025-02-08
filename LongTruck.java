@@ -53,15 +53,9 @@ public class LongTruck extends Car {
 
     @Override
     public void move() {
-        Direction currentDirection = getCurrentDirection();
-        if (!this.ramp){
-            switch (currentDirection) {
-                case NORTH -> y += currentSpeed;
-                case WEST -> x -= currentSpeed;
-                case SOUTH -> y -= currentSpeed;
-                case EAST -> x += currentSpeed;
-            }
-        }}
+        if (!this.ramp)
+           super.move();
+    }
 
     @Override
     double speedFactor() {

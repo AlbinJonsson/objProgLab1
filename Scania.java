@@ -31,15 +31,10 @@ public class Scania extends Car {
 
     @Override
     public void move() {
-        Direction currentDirection = getCurrentDirection();
         if (this.flakAngle == 0){
-        switch (currentDirection) {
-            case NORTH -> y += currentSpeed;
-            case WEST -> x -= currentSpeed;
-            case SOUTH -> y -= currentSpeed;
-            case EAST -> x += currentSpeed;
+            super.move();
         }
-    }}
+    }
 
     @Override
     double speedFactor() {
