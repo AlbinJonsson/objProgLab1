@@ -1,15 +1,18 @@
 import java.awt.*;
+import java.sql.Array;
 
-public class LongTruck extends Car {
-    // most likely to use composition
-    private final Scania scaniaHelper = new Scania(); // Composition
-    private boolean ramp;
-    private int antalBilar;
+public class LongTruck extends Truck implements LoadableVehicle{
 
-    public LongTruck(String modelName, Color color, double currentSpeed, double enginePower, int nrDoors) {
-        super(modelName, color, currentSpeed, enginePower, nrDoors);
-        this.ramp = false;
-        this.antalBilar = 0;
+
+    private boolean rampDown;
+    private int currentNrCars;
+    private Car[] carsOnTruck;
+
+    public LongTruck() {
+        super("Long Hauler", Color.orange, 0, 250, 2);
+        this.rampDown = false;
+        this.currentNrCars = 0;
+        this.carsOnTruck = new Car[8];
     }
 
     /*
@@ -23,16 +26,19 @@ public class LongTruck extends Car {
      */
     // Raise the ramp
     private void raiseRamp(){
-        this.ramp = false; // rampen inte nere
+        this.rampDown = false; // rampen inte nere
     }
 
     //Down the ramp
     private void downRamp(){
-        this.ramp = true; // rampen ner
+        this.rampDown = true; // rampen ner
+    }
+    private boolean getIsRampUp() {
+        return rampDown;
     }
 
-    private int getAntalBilar(){
-        return antalBilar;
+    public int getCurrentNrOfCars(){
+        return currentNrCars;
     }
 
     // Kolla så att bilen som lastas på är inte en transportbil
@@ -45,37 +51,60 @@ public class LongTruck extends Car {
 
 
     // Lasta bilar på långtradare
-    private void loadCar(){
-        if (this.ramp && currentSpeed == 0){
-        antalBilar++;
-    }else System.out.println("Ramp is not down or Car is in motion!");
+
+    public boolean isCarWithinDistance(Car car){
+        double distance = Math.sqrt(Math.pow(car.getCurrentXLocation() - this.getCurrentXLocation(), 2) + Math.pow(car.getCurrentYLocation() - this.getCurrentYLocation(), 2));
+        return distance <= 2.0 && !getIsRampUp();
     }
+
+    public boolean loadCar(Car car){
+        if (isCarWithinDistance(car) && currentSpeed == 0 && currentNrCars < carsOnTruck.length) {
+
+            carsOnTruck[currentNrCars] = car;
+            currentNrCars++;
+            car.setPosition(this.getCurrentXLocation(), this.getCurrentYLocation());
+            return true;
+        }else {
+            System.out.println("Ramp is not down, the truck is in motion or there are too many cars loaded already!");
+            return false;
+        }
+    }
+
+    public Car unloadCar(){
+        if (currentNrCars > 0){
+            Car car = carsOnTruck[currentNrCars -1];
+            carsOnTruck[currentNrCars - 1] = null;
+            currentNrCars--;
+            car.unloadCar();
+            return car;
+        }else {
+            System.out.println("No cars to unload!");
+            return null;
+        }
+
+    }
+
 
     @Override
     public void move() {
-        if (!this.ramp)
-           super.move();
+        if (!this.rampDown){
+            super.move();
+
+            for (int i = 0; i < this.currentNrCars; i++) {
+                Car car = carsOnTruck[i];
+                if (car != null){
+                    car.move();
+                }
+            }
+        }
     }
 
     @Override
     double speedFactor() {
-        return scaniaHelper.speedFactor();
+        return 1.1;
     }
 
 
-    @Override
-    void incrementSpeed(double currentSpeed) {
-        scaniaHelper.incrementSpeed(currentSpeed);
-    }
-
-    @Override
-    void decrementSpeed(double currentSpeed) {
-        scaniaHelper.decrementSpeed(currentSpeed);
-    }
-
-    /*private final Scania parent;
-    public LongTruck(Scania parent) {
-       this.parent = parent;*/
 
 
 }

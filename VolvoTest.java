@@ -122,7 +122,7 @@ class   VolvoTest {
         volvo.move();
         volvo.turnLeft();
 
-        assertEquals("NORTH", volvo.getCurrentDirection());
+        assertEquals(Direction.NORTH, volvo.getCurrentDirection());
     }
 
     @Test
@@ -133,7 +133,7 @@ class   VolvoTest {
         volvo.turnRight();
         volvo.turnRight();
         volvo.turnRight();
-        assertEquals("SOUTH", volvo.getCurrentDirection());
+        assertEquals(Direction.SOUTH, volvo.getCurrentDirection());
     }
 
     @Test

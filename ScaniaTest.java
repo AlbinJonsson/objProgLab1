@@ -13,15 +13,15 @@ class ScaniaTest {
     }
 
     @Test
-    void raiseFlak() { assertEquals(1, scania.getFlakAngle());
+    void raiseFlak() { assertEquals(1, scania.getRampAngle());
     }
 
     @Test
-    void downFlak() { assertEquals(0, scania.getFlakAngle());
+    void downFlak() { assertEquals(0, scania.getRampAngle());
     }
 
     @Test
-    void getFlakAngle() { assertEquals(0, scania.getFlakAngle());
+    void getFlakAngle() { assertEquals(0, scania.getRampAngle());
     }
 
     @Test

@@ -1,53 +1,43 @@
 import java.awt.*;
 
-public class Scania extends Car {
+public class Scania extends Truck {
 
-    private final Volvo240 helper = new Volvo240();  // Composition
     private Volvo240 volvo;  // composition
-    private int flakAngle;
+    private int rampAngle;
 
 
     public Scania() {
         super("Scania", Color.pink, 0, 200, 2);
         stopEngine();
-        this.flakAngle = 0;
+        this.rampAngle = 0;
     }
 
-    // Raise the flak
-    public void raiseFlak(){
-        if (this.flakAngle >= 0 && this.flakAngle <=70 && this.currentSpeed == 0) this.flakAngle++;
+    // Raise the ramp
+    public void raiseRamp(){
+        if (this.rampAngle >= 0 && this.rampAngle <=70 && this.currentSpeed == 0) this.rampAngle+=10;
     }
 
-    //Down the falk
-    public void downFlak(){
-        if (this.flakAngle >= 0 && this.flakAngle <=70 && this.currentSpeed == 0) this.flakAngle--;
+    //Down the ramp
+    public void downRamp(){
+        if (this.rampAngle >= 0 && this.rampAngle <=70 && this.currentSpeed == 0) this.rampAngle-=10;
     }
 
     // Get the current position of the flak
-    public double getFlakAngle(){
-        return this.flakAngle;
+    public double getRampAngle(){
+        return this.rampAngle;
     }
 
 
     @Override
     public void move() {
-        if (this.flakAngle == 0){
+        if (this.rampAngle == 0){
             super.move();
         }
     }
 
     @Override
     double speedFactor() {
-        return helper.speedFactor();
+        return 1.2;
     }
 
-    @Override
-    void incrementSpeed(double currentSpeed) {
-        helper.incrementSpeed(currentSpeed);
-    }
-
-    @Override
-    void decrementSpeed(double currentSpeed) {
-        helper.decrementSpeed(currentSpeed);
-    }
 }

@@ -138,7 +138,7 @@ class SaabTest {
         saab.move();
         saab.turnLeft();
 
-        assertEquals("NORTH", saab.getCurrentDirection());
+        assertEquals(Direction.NORTH, saab.getCurrentDirection());
     }
 
     @Test
@@ -148,7 +148,7 @@ class SaabTest {
         saab95.turnRight();
         saab95.turnRight();
         saab95.turnRight();
-        assertEquals("EAST", saab95.getCurrentDirection());
+        assertEquals(Direction.EAST, saab95.getCurrentDirection());
     }
 
     @Test
