@@ -1,7 +1,6 @@
 import java.awt.*;
-import java.sql.Array;
 
-public class LongTruck extends Truck implements LoadableVehicle{
+public class LongTruck extends Truck implements LoadableObject<Car> {
 
 
     private boolean isRampDown;
@@ -25,7 +24,7 @@ public class LongTruck extends Truck implements LoadableVehicle{
             Kan LongTruck använda Car instansvariabler när den skapar en instans av Scania?
      */
     // Raise the ramp
-    private void raiseRamp(){
+    public void raiseRamp(){
         if(getCurrentSpeed() == 0){
             this.isRampDown = false; // rampen inte nere
         }else
@@ -33,7 +32,7 @@ public class LongTruck extends Truck implements LoadableVehicle{
     }
 
     //Down the ramp
-    private void downRamp(){
+    public void downRamp(){
         if(getCurrentSpeed() == 0){
             this.isRampDown = true; // rampen nere
         }else
@@ -60,7 +59,7 @@ public class LongTruck extends Truck implements LoadableVehicle{
         return distance <= 2.0;
     }
 
-    public boolean loadCar(Car car){
+    public boolean loadVehicle(Car car){
 
         if (checkIfCarCanBeLoaded(car)) {
             carsOnTruck[currentNrCars] = car;
@@ -73,7 +72,7 @@ public class LongTruck extends Truck implements LoadableVehicle{
     }
 
 
-    public boolean unloadCar(){
+    public boolean unloadVehicle(){
         if (checkIfCarCanBeUnloaded()){
             Car car = carsOnTruck[currentNrCars -1];
             carsOnTruck[currentNrCars - 1] = null;
@@ -107,7 +106,7 @@ public class LongTruck extends Truck implements LoadableVehicle{
     }
 
     private boolean checkIfCarCanBeUnloaded(){
-        if(isRampDown){
+        if(!isRampDown){
             System.out.println("Ramp is not down!");
             return false;
         }
@@ -123,7 +122,7 @@ public class LongTruck extends Truck implements LoadableVehicle{
     }
 
     private boolean checkIfCarCanBeLoaded(Car car){
-        if(isRampDown){
+        if(!isRampDown){
             System.out.println("Ramp is not down!");
             return false;
         }

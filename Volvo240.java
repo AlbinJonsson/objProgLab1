@@ -14,6 +14,6 @@ public class Volvo240 extends Car{
     @Override
     public double speedFactor(){
         return enginePower * 0.01 * trimFactor;
-    } // abstract klass i Car
+    } // abstract klass i Vehicle
 
 }
