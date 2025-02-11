@@ -11,24 +11,16 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
         super("Long Hauler", Color.orange, 0, 250, 2);
         this.isRampDown = false;
         this.currentNrCars = 0;
-        this.carsOnTruck = new Car[8];
+        this.carsOnTruck = new Car[6];
     }
 
-    /*
-            Kan man endast använda Scania dvs composition för att få tillgång till
-            Car methoder och Scania metoder eller måste man ärva Car?
 
-
-            funkar instansvariabler för LongTruck på samma sätt som för Scania
-
-            Kan LongTruck använda Car instansvariabler när den skapar en instans av Scania?
-     */
     // Raise the ramp
     public void raiseRamp(){
         if(getCurrentSpeed() == 0){
             this.isRampDown = false; // rampen inte nere
         }else
-            System.out.println("Can't down ramp, current speed: " + getCurrentSpeed());
+            throw new IllegalArgumentException("Can't raise ramp, current speed: " + getCurrentSpeed());
     }
 
     //Down the ramp
@@ -36,23 +28,16 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
         if(getCurrentSpeed() == 0){
             this.isRampDown = true; // rampen nere
         }else
-            System.out.println("Can't down ramp, current speed: " + getCurrentSpeed());
+            throw new IllegalArgumentException("Can't down ramp, current speed: " + getCurrentSpeed());
+    }
+
+    public boolean getIsRampDown(){
+        return isRampDown;
     }
 
     public int getCurrentNrOfCars(){
         return currentNrCars;
     }
-
-    // Kolla så att bilen som lastas på är inte en transportbil
-    // Vad kännetecknar en transportbil dvs hur definierar vi en transportbil
-    // De bör då hamna rimligt nära biltransporten. (Ej implementerad)
-    // Bilar kan endast lossas i omvänd ordning från hur de lastades, dvs den sista bilen som lastades
-    //måste vara först att lossas (first-in-last-out). (Ej implementerad)
-    // Under det att en bil är lastad på biltransporten ska dess position i världen alltid vara densamma
-    // som biltransportens position. (Ej implementerad)
-
-
-    // Lasta bilar på långtradare
 
     public boolean isCarWithinDistance(Car car){
         double distance = Math.sqrt(Math.pow(car.getCurrentXLocation() - this.getCurrentXLocation(), 2) + Math.pow(car.getCurrentYLocation() - this.getCurrentYLocation(), 2));
@@ -107,38 +92,32 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
 
     private boolean checkIfCarCanBeUnloaded(){
         if(!isRampDown){
-            System.out.println("Ramp is not down!");
-            return false;
+            throw new IllegalArgumentException("Ramp is not down!");
         }
         if (getCurrentSpeed() > 0){
-            System.out.println("The truck is in motion!");
-            return false;
+            throw new IllegalArgumentException("The truck is in motion!");
         }
         if(getCurrentNrOfCars() <= 0){
-            System.out.println("No cars to unload!");
-            return false;
+            throw new IllegalArgumentException("No cars to unload!");
         }
         return true;
     }
 
     private boolean checkIfCarCanBeLoaded(Car car){
         if(!isRampDown){
-            System.out.println("Ramp is not down!");
-            return false;
+            throw new IllegalArgumentException("Ramp is not down!");
         }
         if (getCurrentSpeed() > 0){
-            System.out.println("The truck is in motion!");
-            return false;
+            throw new IllegalArgumentException("The truck is in motion!");
         }
         if (car.isLoaded){
-            System.out.println("Car is already loaded!");
-            return false;
+            throw new IllegalArgumentException("Car is already loaded!");
         }
         if (!isCarWithinDistance(car)){
-            System.out.println("Car is not withing range of the truck!");
+            throw new IllegalArgumentException("Car is not withing range of the truck!");
         }
         if (!(currentNrCars < carsOnTruck.length)){
-            System.out.println("There are too many cars loaded!");
+            throw new IllegalArgumentException("There are too many cars loaded!");
         }
         return true;
     }

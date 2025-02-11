@@ -13,18 +13,54 @@ class ScaniaTest {
     }
 
     @Test
-    void raiseFlak() { assertEquals(1, scania.getRampAngle());
+    void raiseFlak() {
+        scania.raiseRamp();
+        assertEquals(10, scania.getRampAngle());
     }
 
     @Test
-    void downFlak() { assertEquals(0, scania.getRampAngle());
+    void downFlak() {
+        scania.raiseRamp();
+        scania.raiseRamp();
+
+        scania.downRamp();
+        assertEquals(10, scania.getRampAngle());
     }
 
     @Test
-    void getFlakAngle() { assertEquals(0, scania.getRampAngle());
+    void getRampAngle() { assertEquals(0, scania.getRampAngle());
     }
 
     @Test
     void move() {
+        scania.incrementSpeed(10);
+        scania.move();
+        scania.move();
+        scania.move();
+        scania.move();
+
+        assertEquals(48, scania.getCurrentYLocation());
+    }
+
+    @Test
+    void raiseRampWhenInMotion(){
+        scania.incrementSpeed(10);
+
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    scania.raiseRamp();
+                }
+        );
+    }
+    @Test
+    void downRampWhenInMotion(){
+        scania.raiseRamp();
+        scania.incrementSpeed(10);
+
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    scania.downRamp();
+                }
+        );
     }
 }

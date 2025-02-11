@@ -15,11 +15,17 @@ public class Scania extends Truck {
     // Raise the ramp
     public void raiseRamp(){
         if (this.rampAngle >= 0 && this.rampAngle <=70 && this.currentSpeed == 0) this.rampAngle+=10;
+        else{
+            throw new IllegalArgumentException("Cant raise ramp");
+        }
     }
 
     //Down the ramp
     public void downRamp(){
         if (this.rampAngle >= 0 && this.rampAngle <=70 && this.currentSpeed == 0) this.rampAngle-=10;
+        else{
+            throw new IllegalArgumentException("Cant down ramp");
+        }
     }
 
     // Get the current position of the flak

@@ -90,49 +90,152 @@ class LongTruckTest {
     }
 
     @Test
+    void testRaiseRamp() {
+        truck.downRamp();
+        truck.raiseRamp();
+
+        assertFalse(truck.getIsRampDown());
+    }
+
+    @Test
+    void testDownRamp() {
+
+        truck.raiseRamp();
+        truck.downRamp();
+
+        assertTrue(truck.getIsRampDown());
+    }
+
+    @Test
     void testloadVehicleWhenTruckIsMoving(){
+        truck.downRamp();
         Volvo240 volvo = new Volvo240();
         truck.incrementSpeed(10);
-        truck.loadVehicle(volvo);
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.loadVehicle(volvo);
+                }
+        );
     }
 
     @Test
-    void loadMaxNumberOfCars(){
+    void testLoadVehicleWhenRampIsRaised(){
+        Volvo240 volvo = new Volvo240();
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.loadVehicle(volvo);
+                }
+        );
+    }
+
+    @Test
+    void testLoadVehicleWhenVehicleIsAlreadyLoaded(){
+        Volvo240 volvo = new Volvo240();
+        truck.downRamp();
+        truck.loadVehicle(volvo);
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.loadVehicle(volvo);
+                }
+        );
+    }
+
+    @Test
+    void testLoadVehicleWhenOutOfRange(){
+        Volvo240 volvo = new Volvo240();
+        volvo.setPosition(100, 100);
 
         truck.downRamp();
-        Volvo240 volvo1 = new Volvo240();
-        Volvo240 volvo2 = new Volvo240();
-        Volvo240 volvo3 = new Volvo240();
-        Volvo240 volvo4 = new Volvo240();
-        Saab95 saab1 = new Saab95();
-        Saab95 saab2 = new Saab95();
-        Saab95 saab3 = new Saab95();
-        Saab95 saab5 = new Saab95();
-        Saab95 saab6 = new Saab95();
 
-        truck.loadVehicle(volvo1);
-        truck.loadVehicle(volvo2);
-        truck.loadVehicle(volvo3);
-        truck.loadVehicle(volvo4);
-        truck.loadVehicle(saab1);
-        truck.loadVehicle(saab2);
-        truck.loadVehicle(saab3);
-        truck.loadVehicle(saab5);
-
-        assertEquals(8, truck.getCurrentNrOfCars());
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.loadVehicle(volvo);
+                }
+        );
     }
 
     @Test
-    void BilVerkstad(){
-
+    void testLoadTooManyCars(){
+        truck.downRamp();
         Volvo240 volvo = new Volvo240();
-        Saab95 saab = new Saab95();
-        Scania scania = new Scania();
-        VehicleGarage<Truck> allaFordon = new VehicleGarage<>(10);
+        Volvo240 volvo240 = new Volvo240();
+        Volvo240 volvo3 = new Volvo240();
+        Volvo240 volvo4 = new Volvo240();
+        Volvo240 volvo5 = new Volvo240();
+        Volvo240 volvo6 = new Volvo240();
+        Volvo240 volvo8 = new Volvo240();
 
+        truck.loadVehicle(volvo);
+        truck.loadVehicle(volvo240);
+        truck.loadVehicle(volvo3);
+        truck.loadVehicle(volvo4);
+        truck.loadVehicle(volvo5);
+        truck.loadVehicle(volvo6);
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.loadVehicle(volvo8);
+                }
+        );
+    }
 
-        allaFordon.loadVehicle(scania);
+    @Test
+    void testUnloadCarWhenRampIsRaised(){
+        Volvo240 volvo = new Volvo240();
+        truck.downRamp();
+        truck.loadVehicle(volvo);
 
+        truck.raiseRamp();
+
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.unloadVehicle();
+                }
+        );
+    }
+
+    @Test
+    void testUnloadCarWhenTruckInMotion(){
+        Volvo240 volvo = new Volvo240();
+        truck.downRamp();
+        truck.loadVehicle(volvo);
+
+        truck.incrementSpeed(10);
+
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.unloadVehicle();
+                }
+        );
+    }
+
+    @Test
+    void testUnloadCarWhenNoCarsAreLoaded(){
+        truck.downRamp();
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.unloadVehicle();
+                }
+        );
+    }
+
+    @Test
+    void testRaiseRampWhenTruckIsMoving(){
+        truck.incrementSpeed(10);
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.raiseRamp();
+                }
+        );
+    }
+
+    @Test
+    void testDownRampWhenTruckIsMoving(){
+        truck.incrementSpeed(10);
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    truck.downRamp();
+                }
+        );
     }
 
 
