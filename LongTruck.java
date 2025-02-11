@@ -4,13 +4,13 @@ import java.sql.Array;
 public class LongTruck extends Truck implements LoadableVehicle{
 
 
-    private boolean rampDown;
+    private boolean isRampDown;
     private int currentNrCars;
     private Car[] carsOnTruck;
 
     public LongTruck() {
         super("Long Hauler", Color.orange, 0, 250, 2);
-        this.rampDown = false;
+        this.isRampDown = false;
         this.currentNrCars = 0;
         this.carsOnTruck = new Car[8];
     }
@@ -26,15 +26,18 @@ public class LongTruck extends Truck implements LoadableVehicle{
      */
     // Raise the ramp
     private void raiseRamp(){
-        this.rampDown = false; // rampen inte nere
+        if(getCurrentSpeed() == 0){
+            this.isRampDown = false; // rampen inte nere
+        }else
+            System.out.println("Can't down ramp, current speed: " + getCurrentSpeed());
     }
 
     //Down the ramp
     private void downRamp(){
-        this.rampDown = true; // rampen ner
-    }
-    private boolean getIsRampUp() {
-        return rampDown;
+        if(getCurrentSpeed() == 0){
+            this.isRampDown = true; // rampen nere
+        }else
+            System.out.println("Can't down ramp, current speed: " + getCurrentSpeed());
     }
 
     public int getCurrentNrOfCars(){
@@ -54,32 +57,31 @@ public class LongTruck extends Truck implements LoadableVehicle{
 
     public boolean isCarWithinDistance(Car car){
         double distance = Math.sqrt(Math.pow(car.getCurrentXLocation() - this.getCurrentXLocation(), 2) + Math.pow(car.getCurrentYLocation() - this.getCurrentYLocation(), 2));
-        return distance <= 2.0 && !getIsRampUp();
+        return distance <= 2.0;
     }
 
     public boolean loadCar(Car car){
-        if (isCarWithinDistance(car) && currentSpeed == 0 && currentNrCars < carsOnTruck.length) {
 
+        if (checkIfCarCanBeLoaded(car)) {
             carsOnTruck[currentNrCars] = car;
             currentNrCars++;
             car.setPosition(this.getCurrentXLocation(), this.getCurrentYLocation());
+            car.setLoaded(true);
             return true;
-        }else {
-            System.out.println("Ramp is not down, the truck is in motion or there are too many cars loaded already!");
+        }else
             return false;
-        }
     }
 
-    public Car unloadCar(){
-        if (currentNrCars > 0){
+
+    public boolean unloadCar(){
+        if (checkIfCarCanBeUnloaded()){
             Car car = carsOnTruck[currentNrCars -1];
             carsOnTruck[currentNrCars - 1] = null;
             currentNrCars--;
-            car.unloadCar();
-            return car;
+            car.setLoaded(false);
+            return true;
         }else {
-            System.out.println("No cars to unload!");
-            return null;
+            return false;
         }
 
     }
@@ -87,13 +89,13 @@ public class LongTruck extends Truck implements LoadableVehicle{
 
     @Override
     public void move() {
-        if (!this.rampDown){
+        if (!this.isRampDown){
             super.move();
 
             for (int i = 0; i < this.currentNrCars; i++) {
                 Car car = carsOnTruck[i];
                 if (car != null){
-                    car.move();
+                    car.setPosition(this.getCurrentXLocation(), this.getCurrentYLocation());
                 }
             }
         }
@@ -104,7 +106,41 @@ public class LongTruck extends Truck implements LoadableVehicle{
         return 1.1;
     }
 
+    private boolean checkIfCarCanBeUnloaded(){
+        if(isRampDown){
+            System.out.println("Ramp is not down!");
+            return false;
+        }
+        if (getCurrentSpeed() > 0){
+            System.out.println("The truck is in motion!");
+            return false;
+        }
+        if(getCurrentNrOfCars() <= 0){
+            System.out.println("No cars to unload!");
+            return false;
+        }
+        return true;
+    }
 
-
-
+    private boolean checkIfCarCanBeLoaded(Car car){
+        if(isRampDown){
+            System.out.println("Ramp is not down!");
+            return false;
+        }
+        if (getCurrentSpeed() > 0){
+            System.out.println("The truck is in motion!");
+            return false;
+        }
+        if (car.isLoaded){
+            System.out.println("Car is already loaded!");
+            return false;
+        }
+        if (!isCarWithinDistance(car)){
+            System.out.println("Car is not withing range of the truck!");
+        }
+        if (!(currentNrCars < carsOnTruck.length)){
+            System.out.println("There are too many cars loaded!");
+        }
+        return true;
+    }
 }

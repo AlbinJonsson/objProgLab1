@@ -58,16 +58,15 @@ class LongTruckTest {
     @Test
     void loadCarOnTruck() {
       Volvo240 volvo = new Volvo240();
-      volvo.load(truck);
+      truck.loadCar(volvo);
       assertEquals(1, truck.getCurrentNrOfCars());
     }
 
     @Test
     void unloadCarOnTruck() {
         Volvo240 volvo = new Volvo240();
-        volvo.load(truck);
-        volvo.unloadCar();
-
+        truck.loadCar(volvo);
+        truck.unloadCar();
         assertEquals(0, truck.getCurrentNrOfCars());
     }
 }

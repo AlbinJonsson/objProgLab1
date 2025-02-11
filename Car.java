@@ -2,25 +2,21 @@ import java.awt.*;
 
 public abstract class Car extends Vehicle{
 
-    private boolean isLoaded;
+    protected boolean isLoaded;
     private LoadableVehicle loadableVehicle;
 
     public Car(String modelName, Color color, double currentSpeed, double enginePower, int nrDoors) {
         super(modelName, color, currentSpeed, enginePower, nrDoors);
     }
 
-    public void load(LoadableVehicle vehicle) {
-        if(vehicle.loadCar(this)&& !this.isLoaded) {
-            this.isLoaded = true;
-            this.loadableVehicle = vehicle;
-        }
+    protected void setLoaded(boolean loaded) {
+        this.isLoaded = loaded;
     }
 
-    public void unloadCar(){
-        if (this.isLoaded) {
-            this.loadableVehicle.unloadCar();
-            this.isLoaded = false;
-            this.loadableVehicle = null;
+    @Override
+    public void move() {
+        if(!this.isLoaded) {
+            super.move();
         }
     }
 
