@@ -23,7 +23,7 @@ class ScaniaTest {
         scania.raiseRamp();
         scania.raiseRamp();
 
-        scania.downRamp();
+        scania.lowerRamp();
         assertEquals(10, scania.getRampAngle());
     }
 
@@ -46,7 +46,7 @@ class ScaniaTest {
     void downRampWhenAngleIs0(){
         assertThrows(IllegalArgumentException.class,
                 () ->{
-                    scania.downRamp();
+                    scania.lowerRamp();
                 }
         );
     }
@@ -68,7 +68,7 @@ class ScaniaTest {
 
         assertThrows(IllegalArgumentException.class,
                 () ->{
-                    scania.downRamp();
+                    scania.lowerRamp();
                 }
         );
     }

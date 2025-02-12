@@ -59,24 +59,24 @@ class LongTruckTest {
     void loadVehicleOnTruck() {
       Volvo240 volvo = new Volvo240();
 
-      truck.downRamp();
+      truck.lowerRamp();
       truck.loadVehicle(volvo);
-      assertEquals(1, truck.getCurrentNrOfCars());
+      assertEquals(1, truck.getCurrentNrCars());
     }
 
     @Test
     void unloadVehicleOnTruck() {
         Volvo240 volvo = new Volvo240();
-        truck.downRamp();
+        truck.lowerRamp();
         truck.loadVehicle(volvo);
         truck.unloadVehicle();
-        assertEquals(0, truck.getCurrentNrOfCars());
+        assertEquals(0, truck.getCurrentNrCars());
     }
 
     @Test
     void testCarPositionWhenLoaded(){
         Volvo240 volvo = new Volvo240();
-        truck.downRamp();
+        truck.lowerRamp();
         truck.loadVehicle(volvo);
 
         truck.raiseRamp();
@@ -91,24 +91,24 @@ class LongTruckTest {
 
     @Test
     void testRaiseRamp() {
-        truck.downRamp();
+        truck.lowerRamp();
         truck.raiseRamp();
 
         assertFalse(truck.getIsRampDown());
     }
 
     @Test
-    void testDownRamp() {
+    void testlowerRamp() {
 
         truck.raiseRamp();
-        truck.downRamp();
+        truck.lowerRamp();
 
         assertTrue(truck.getIsRampDown());
     }
 
     @Test
     void testloadVehicleWhenTruckIsMoving(){
-        truck.downRamp();
+        truck.lowerRamp();
         Volvo240 volvo = new Volvo240();
         truck.incrementSpeed(10);
         assertThrows(IllegalArgumentException.class,
@@ -131,7 +131,7 @@ class LongTruckTest {
     @Test
     void testLoadVehicleWhenVehicleIsAlreadyLoaded(){
         Volvo240 volvo = new Volvo240();
-        truck.downRamp();
+        truck.lowerRamp();
         truck.loadVehicle(volvo);
         assertThrows(IllegalArgumentException.class,
                 () ->{
@@ -147,7 +147,7 @@ class LongTruckTest {
         Volvo240 volvo = new Volvo240();
         volvo.setPosition(100, 100);
 
-        truck.downRamp();
+        truck.lowerRamp();
 
         assertThrows(IllegalArgumentException.class,
                 () ->{
@@ -158,7 +158,7 @@ class LongTruckTest {
 
     @Test
     void testLoadTooManyCars(){
-        truck.downRamp();
+        truck.lowerRamp();
         Volvo240 volvo = new Volvo240();
         Volvo240 volvo240 = new Volvo240();
         Volvo240 volvo3 = new Volvo240();
@@ -183,7 +183,7 @@ class LongTruckTest {
     @Test
     void testUnloadCarWhenRampIsRaised(){
         Volvo240 volvo = new Volvo240();
-        truck.downRamp();
+        truck.lowerRamp();
         truck.loadVehicle(volvo);
 
         truck.raiseRamp();
@@ -198,7 +198,7 @@ class LongTruckTest {
     @Test
     void testUnloadCarWhenTruckInMotion(){
         Volvo240 volvo = new Volvo240();
-        truck.downRamp();
+        truck.lowerRamp();
         truck.loadVehicle(volvo);
 
         truck.incrementSpeed(10);
@@ -212,7 +212,7 @@ class LongTruckTest {
 
     @Test
     void testUnloadCarWhenNoCarsAreLoaded(){
-        truck.downRamp();
+        truck.lowerRamp();
         assertThrows(IllegalArgumentException.class,
                 () ->{
                     truck.unloadVehicle();
@@ -231,11 +231,11 @@ class LongTruckTest {
     }
 
     @Test
-    void testDownRampWhenTruckIsMoving(){
+    void testlowerRampWhenTruckIsMoving(){
         truck.incrementSpeed(10);
         assertThrows(IllegalArgumentException.class,
                 () ->{
-                    truck.downRamp();
+                    truck.lowerRamp();
                 }
         );
     }
@@ -244,7 +244,7 @@ class LongTruckTest {
     void testCarPositionWhenUnloadedX(){
         Volvo240 volvo = new Volvo240();
 
-        truck.downRamp();
+        truck.lowerRamp();
         truck.loadVehicle(volvo);
 
         truck.unloadVehicle();
@@ -255,7 +255,7 @@ class LongTruckTest {
     void testCarPositionWhenUnloadedY(){
         Volvo240 volvo = new Volvo240();
 
-        truck.downRamp();
+        truck.lowerRamp();
         truck.loadVehicle(volvo);
 
         truck.unloadVehicle();

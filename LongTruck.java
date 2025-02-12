@@ -2,43 +2,27 @@ import java.awt.*;
 
 public class LongTruck extends Truck implements LoadableObject<Car> {
 
-
-    private boolean isRampDown;
-    private int currentNrCars;
     private Car[] carsOnTruck;
+    private ToggleRamp ramp;
+
 
     public LongTruck() {
         super("Long Hauler", Color.orange, 0, 250, 2);
-        this.isRampDown = false;
-        this.currentNrCars = 0;
         this.carsOnTruck = new Car[6];
+        this.ramp = new ToggleRamp();
     }
 
 
-    // Raise the ramp
-    @Override
     public void raiseRamp(){
-        if(getCurrentSpeed() == 0){
-            this.isRampDown = false; // rampen inte nere
-        }else
-            throw new IllegalArgumentException("Can't raise ramp, current speed: " + getCurrentSpeed());
+        ramp.raiseRamp(isStandingStill());
     }
 
-    //Down the ramp
-    @Override
-    public void downRamp(){
-        if(getCurrentSpeed() == 0){
-            this.isRampDown = true; // rampen nere
-        }else
-            throw new IllegalArgumentException("Can't down ramp, current speed: " + getCurrentSpeed());
+    public void lowerRamp(){
+        ramp.lowerRamp(isStandingStill());
     }
 
     public boolean getIsRampDown(){
-        return isRampDown;
-    }
-
-    public int getCurrentNrOfCars(){
-        return currentNrCars;
+        return ramp.getIsRampDown();
     }
 
     public boolean isCarWithinDistance(Car car){
@@ -49,8 +33,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
     public boolean loadVehicle(Car car){
 
         if (checkIfCarCanBeLoaded(car)) {
-            carsOnTruck[currentNrCars] = car;
-            currentNrCars++;
+            carsOnTruck[getCurrentNrCars()] = car;
             car.setPosition(this.getCurrentXLocation(), this.getCurrentYLocation());
             car.setLoaded(true);
             return true;
@@ -61,9 +44,8 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
 
     public Car unloadVehicle(){
         if (checkIfCarCanBeUnloaded()){
-            Car car = carsOnTruck[currentNrCars -1];
-            carsOnTruck[currentNrCars - 1] = null;
-            currentNrCars--;
+            Car car = carsOnTruck[getCurrentNrCars() -1];
+            carsOnTruck[getCurrentNrCars() - 1] = null;
             car.setLoaded(false);
             car.setPosition(this.getCurrentXLocation() + 4, this.getCurrentYLocation() + 2);
             return car;
@@ -76,10 +58,10 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
 
     @Override
     public void move() {
-        if (!this.isRampDown){
+        if (!ramp.getIsRampDown()) {
             super.move();
 
-            for (int i = 0; i < this.currentNrCars; i++) {
+            for (int i = 0; i < getCurrentNrCars(); i++) {
                 Car car = carsOnTruck[i];
                 if (car != null){
                     car.setPosition(this.getCurrentXLocation(), this.getCurrentYLocation());
@@ -94,20 +76,30 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
     }
 
     private boolean checkIfCarCanBeUnloaded(){
-        if(!isRampDown){
+        if(!ramp.getIsRampDown()){
             throw new IllegalArgumentException("Ramp is not down!");
         }
         if (getCurrentSpeed() > 0){
             throw new IllegalArgumentException("The truck is in motion!");
         }
-        if(getCurrentNrOfCars() <= 0){
+        if(getCurrentNrCars() <= 0){
             throw new IllegalArgumentException("No cars to unload!");
         }
         return true;
     }
 
+    public int getCurrentNrCars(){
+        int count = 0;
+        for(Car car : carsOnTruck){
+            if(car != null){
+                count++;
+            }
+        }
+        return count;
+    }
+
     private boolean checkIfCarCanBeLoaded(Car car){
-        if(!isRampDown){
+        if(!ramp.getIsRampDown()){
             throw new IllegalArgumentException("Ramp is not down!");
         }
         if (getCurrentSpeed() > 0){
@@ -119,7 +111,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
         if (!isCarWithinDistance(car)){
             throw new IllegalArgumentException("Car is not withing range of the truck!");
         }
-        if (!(currentNrCars < carsOnTruck.length)){
+        if (!(getCurrentNrCars() < carsOnTruck.length)){
             throw new IllegalArgumentException("There are too many cars loaded!");
         }
         return true;

@@ -39,6 +39,10 @@ public abstract class Vehicle implements Movable{
         return x;
     }
 
+    public boolean isStandingStill() {
+        return this.currentSpeed == 0;
+    }
+
     public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
