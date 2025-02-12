@@ -138,6 +138,8 @@ class LongTruckTest {
                     truck.loadVehicle(volvo);
                 }
         );
+
+
     }
 
     @Test
@@ -236,6 +238,28 @@ class LongTruckTest {
                     truck.downRamp();
                 }
         );
+    }
+
+    @Test
+    void testCarPositionWhenUnloadedX(){
+        Volvo240 volvo = new Volvo240();
+
+        truck.downRamp();
+        truck.loadVehicle(volvo);
+
+        truck.unloadVehicle();
+        assertEquals(4, volvo.getCurrentXLocation());
+    }
+
+    @Test
+    void testCarPositionWhenUnloadedY(){
+        Volvo240 volvo = new Volvo240();
+
+        truck.downRamp();
+        truck.loadVehicle(volvo);
+
+        truck.unloadVehicle();
+        assertEquals(2, volvo.getCurrentYLocation());
     }
 
 

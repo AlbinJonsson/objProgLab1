@@ -3,7 +3,6 @@ import java.awt.*;
 public abstract class Car extends Vehicle{
 
     protected boolean isLoaded;
-    private LoadableObject loadableObject;
 
     public Car(String modelName, Color color, double currentSpeed, double enginePower, int nrDoors) {
         super(modelName, color, currentSpeed, enginePower, nrDoors);

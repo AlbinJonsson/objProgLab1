@@ -16,6 +16,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
 
 
     // Raise the ramp
+    @Override
     public void raiseRamp(){
         if(getCurrentSpeed() == 0){
             this.isRampDown = false; // rampen inte nere
@@ -24,6 +25,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
     }
 
     //Down the ramp
+    @Override
     public void downRamp(){
         if(getCurrentSpeed() == 0){
             this.isRampDown = true; // rampen nere
@@ -63,6 +65,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
             carsOnTruck[currentNrCars - 1] = null;
             currentNrCars--;
             car.setLoaded(false);
+            car.setPosition(this.getCurrentXLocation() + 4, this.getCurrentYLocation() + 2);
             return true;
         }else {
             return false;

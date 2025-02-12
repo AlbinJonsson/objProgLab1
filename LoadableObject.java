@@ -1,3 +1,3 @@
 public interface LoadableObject<T> {
-    boolean loadVehicle(T car);
+    boolean loadVehicle(T vehicle);
 }

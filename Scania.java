@@ -2,7 +2,6 @@ import java.awt.*;
 
 public class Scania extends Truck {
 
-    private Volvo240 volvo;  // composition
     private int rampAngle;
 
 
@@ -14,7 +13,7 @@ public class Scania extends Truck {
 
     // Raise the ramp
     public void raiseRamp(){
-        if (this.rampAngle >= 0 && this.rampAngle <=70 && this.currentSpeed == 0) this.rampAngle+=10;
+        if (this.rampAngle >= 0 && this.rampAngle <70 && this.currentSpeed == 0) this.rampAngle+=10;
         else{
             throw new IllegalArgumentException("Cant raise ramp");
         }
@@ -22,7 +21,7 @@ public class Scania extends Truck {
 
     //Down the ramp
     public void downRamp(){
-        if (this.rampAngle >= 0 && this.rampAngle <=70 && this.currentSpeed == 0) this.rampAngle-=10;
+        if (this.rampAngle > 0 && this.rampAngle <=70 && this.currentSpeed == 0) this.rampAngle-=10;
         else{
             throw new IllegalArgumentException("Cant down ramp");
         }

@@ -24,6 +24,7 @@ public class VehicleGarage<T extends Vehicle> implements LoadableObject<T> {
             currentNrOfVehicle++;
             return true;
         }
+
         throw new IllegalArgumentException("The garage is currently full");
     }
 

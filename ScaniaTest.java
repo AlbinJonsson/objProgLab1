@@ -43,6 +43,15 @@ class ScaniaTest {
     }
 
     @Test
+    void downRampWhenAngleIs0(){
+        assertThrows(IllegalArgumentException.class,
+                () ->{
+                    scania.downRamp();
+                }
+        );
+    }
+
+    @Test
     void raiseRampWhenInMotion(){
         scania.incrementSpeed(10);
 
