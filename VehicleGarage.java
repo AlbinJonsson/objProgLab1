@@ -5,7 +5,6 @@ public class VehicleGarage<T extends Vehicle> implements LoadableObject<T> {
 
     private List<T> vehicles;
     private int capacity;
-    private int currentNrOfVehicle;
 
     public VehicleGarage(int capacity) {
         this.capacity = capacity;
@@ -13,15 +12,14 @@ public class VehicleGarage<T extends Vehicle> implements LoadableObject<T> {
     }
 
     public int getCurrentNrOfVehicle() {
-        return currentNrOfVehicle;
+        return vehicles.size();
     }
 
 
     @Override
     public boolean loadVehicle(T vehicle) {
-        if(currentNrOfVehicle < capacity){
+        if(getCurrentNrOfVehicle() < capacity){
             this.vehicles.add(vehicle);
-            currentNrOfVehicle++;
             return true;
         }
 

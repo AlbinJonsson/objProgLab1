@@ -59,16 +59,16 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
     }
 
 
-    public boolean unloadVehicle(){
+    public Car unloadVehicle(){
         if (checkIfCarCanBeUnloaded()){
             Car car = carsOnTruck[currentNrCars -1];
             carsOnTruck[currentNrCars - 1] = null;
             currentNrCars--;
             car.setLoaded(false);
             car.setPosition(this.getCurrentXLocation() + 4, this.getCurrentYLocation() + 2);
-            return true;
+            return car;
         }else {
-            return false;
+            return null;
         }
 
     }
