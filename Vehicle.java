@@ -17,7 +17,7 @@ public abstract class Vehicle implements Movable{
         this.currentSpeed = currentSpeed;
         this.enginePower = enginePower;
         this.nrDoors = nrDoors;
-        this.currentDirection = Direction.NORTH;
+        this.currentDirection = Direction.EAST;
     }
 
     public Direction getCurrentDirection(){
@@ -129,5 +129,10 @@ public abstract class Vehicle implements Movable{
             decrementSpeed(amount);
         }else
             throw new IllegalArgumentException("Amount between 0 and 1");
+    }
+
+    void inverDirection(){
+        turnLeft();
+        turnLeft();
     }
 }
