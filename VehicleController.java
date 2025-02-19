@@ -22,6 +22,7 @@ public class VehicleController {
     VehicleView frame;
     // A list of vehicles, modify if needed
     ArrayList<Vehicle> vehicles = new ArrayList<>();
+    VehicleGarage<Volvo240> volvoWorkshop = new VehicleGarage<>(3);
 
     //methods:
 
@@ -34,7 +35,7 @@ public class VehicleController {
         cc.vehicles.add(new Scania());
 
         // Start a new view and send a reference of self
-        cc.frame = new VehicleView("Vehiclesim 1.0", cc);
+        cc.frame = new VehicleView("VehicleSim 1.0", cc);
 
         // Start the timer
         cc.timer.start();
@@ -54,14 +55,38 @@ public class VehicleController {
                 frame.drawPanel.repaint();
 
                 invertCarIfAtEdge(vehicle);
+
+                parkVolvo();
             }
         }
     }
 
-    private static void invertCarIfAtEdge(Vehicle vehicle) {
-        if(vehicle.getCurrentXLocation() > 800 || vehicle.getCurrentXLocation() < 0){
+    private void invertCarIfAtEdge(Vehicle vehicle) {
+        if(isOutOfFrame(vehicle)){
             vehicle.inverDirection();
         }
+    }
+
+    private void parkVolvo(){
+        for(Vehicle vehicle : vehicles){
+            if(!isInRangeOfGarage(vehicle)){
+                return;
+            }
+            if(vehicle instanceof Volvo240){
+                vehicle.stopEngine();
+                volvoWorkshop.loadVehicle(((Volvo240) vehicle));
+            }
+        }
+
+    }
+
+    private static boolean isInRangeOfGarage(Vehicle vehicle) {
+        return vehicle.getCurrentXLocation() > 285;
+    }
+
+
+    private static boolean isOutOfFrame(Vehicle vehicle) {
+        return vehicle.getCurrentXLocation() > 800 || vehicle.getCurrentXLocation() < 0;
     }
 
 
@@ -109,6 +134,22 @@ public class VehicleController {
                 ((Saab95) vehicle).setTurboOff();
             }
 
+        }
+    }
+
+    void scaniaRaiseRamp(){
+        for (Vehicle vehicle : vehicles){
+            if(vehicle instanceof Scania){
+                ((Scania) vehicle).raiseRamp();
+            }
+        }
+    }
+
+    void scaniaLowerRamp(){
+        for (Vehicle vehicle : vehicles){
+            if(vehicle instanceof Scania){
+                ((Scania) vehicle).lowerRamp();
+            }
         }
     }
 }

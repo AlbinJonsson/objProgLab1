@@ -18,10 +18,14 @@ public class VehicleGarage<T extends Vehicle> implements LoadableObject<T> {
 
     @Override
     public boolean loadVehicle(T vehicle) {
+        if(vehicles.contains(vehicle))
+            return false;
+
         if(getCurrentNrOfVehicle() < capacity){
             this.vehicles.add(vehicle);
             return true;
         }
+
 
         throw new IllegalArgumentException("The garage is currently full");
     }
