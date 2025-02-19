@@ -35,7 +35,6 @@ public class VehicleGarage<T extends Vehicle> implements LoadableObject<T> {
             throw new IllegalArgumentException("vehicles cannot be null");
         }
         if(vehicles.remove(vehicle)){
-            vehicles.remove(vehicle);
             System.out.println("Vehicle unloaded");
             return vehicle;
         }

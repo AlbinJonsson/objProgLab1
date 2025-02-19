@@ -131,7 +131,7 @@ public abstract class Vehicle implements Movable{
             throw new IllegalArgumentException("Amount between 0 and 1");
     }
 
-    void inverDirection(){
+    void invertDirection(){
         turnLeft();
         turnLeft();
     }

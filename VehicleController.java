@@ -63,7 +63,7 @@ public class VehicleController {
 
     private void invertCarIfAtEdge(Vehicle vehicle) {
         if(isOutOfFrame(vehicle)){
-            vehicle.inverDirection();
+            vehicle.invertDirection();
         }
     }
 
