@@ -105,7 +105,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
         if (getCurrentSpeed() > 0){
             throw new IllegalArgumentException("The truck is in motion!");
         }
-        if (car.isLoaded){
+        if (car.getIsLoaded()){
             throw new IllegalArgumentException("Car is already loaded!");
         }
         if (!isCarWithinDistance(car)){
