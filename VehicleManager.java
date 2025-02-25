@@ -1,34 +1,18 @@
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.util.ArrayList;
 
-/*
-* This class represents the Controller part in the MVC pattern.
-* It's responsibilities is to listen to the View and responds in a appropriate manner by
-* modifying the model state and the updating the view.
- */
+public class VehicleManager implements ClickListener, VehicleList {
 
-public class VehicleController {
-    // member fields:
-
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
-
-    // The frame that represents this instance View of the MVC pattern
-    VehicleView frame;
-    // A list of vehicles, modify if needed
     ArrayList<Vehicle> vehicles = new ArrayList<>();
     VehicleGarage<Volvo240> volvoWorkshop = new VehicleGarage<>(3);
 
-    //methods:
+    Point volvoPoint = new Point();
+    Point saabPoint = new Point();
+    Point scaniaPoint = new Point();
 
     public static void main(String[] args) {
         // Instance of this class
-        VehicleController cc = new VehicleController();
+        VehicleManager cc = new VehicleManager();
 
         cc.vehicles.add(new Volvo240());
         cc.vehicles.add(new Saab95());
@@ -41,32 +25,30 @@ public class VehicleController {
         cc.timer.start();
     }
 
-    /* Each step the TimerListener moves all the vehicles in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            for (Vehicle vehicle : vehicles) {
-                vehicle.move();
-                int x = (int) Math.round(vehicle.getCurrentXLocation());
-                int y = (int) Math.round(vehicle.getCurrentYLocation());
-                frame.drawPanel.moveit(x, y, vehicle);
-                //repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-
-                invertCarIfAtEdge(vehicle);
-                parkVolvo();
-            }
+    void moveit(int x, int y, Vehicle vehicletype){
+        if(vehicletype instanceof Volvo240){
+            volvoPoint.x = x;
+            volvoPoint.y = y + 50;
+        }
+        if(vehicletype instanceof Saab95){
+            saabPoint.x = x;
+            saabPoint.y = y + 150;
+        }
+        if(vehicletype instanceof Scania){
+            scaniaPoint.x = x;
+            scaniaPoint.y = y + 250;
         }
     }
 
-    private void invertCarIfAtEdge(Vehicle vehicle) {
+    @Override
+    public void invertCarIfAtEdge(Vehicle vehicle) {
         if(isOutOfFrame(vehicle)){
             vehicle.invertDirection();
         }
     }
 
-    private void parkVolvo(){
+    @Override
+    public void parkVolvo(){
         for(Vehicle vehicle : vehicles){
             if(!isInRangeOfGarage(vehicle)){
                 return;
@@ -76,6 +58,7 @@ public class VehicleController {
                 volvoWorkshop.loadVehicle(((Volvo240) vehicle));
             }
         }
+
     }
 
     private static boolean isInRangeOfGarage(Vehicle vehicle) {
@@ -88,16 +71,22 @@ public class VehicleController {
     }
 
 
-    // Calls the gas method for each car once
-    void gas(int amount) {
+    @Override
+    public ArrayList<Vehicle> getVehicleList() {
+        return vehicles;
+    }
+
+    @Override
+    public void gas(int amount){
         double gas = ((double) amount) / 100;
         for (Vehicle vehicle : vehicles
-                ) {
+        ) {
             vehicle.gas(gas);
         }
     }
 
-    void brake(int amount) {
+    @Override
+    public void brake(int amount) {
         double brake = ((double) amount) / 100;
         for (Vehicle vehicle : vehicles
         ) {
@@ -105,19 +94,22 @@ public class VehicleController {
         }
     }
 
-    void startEngine(){
+    @Override
+    public void startEngine(){
         for(Vehicle vehicle : vehicles){
             vehicle.startEngine();
         }
     }
 
-    void stopEngine(){
+    @Override
+    public void stopEngine(){
         for(Vehicle vehicle : vehicles){
             vehicle.stopEngine();
         }
     }
 
-    void saabTurboOn(){
+    @Override
+    public void saabTurboOn(){
         for(Vehicle vehicle : vehicles){
             if (vehicle instanceof Saab95){
                 ((Saab95) vehicle).setTurboOn();
@@ -126,7 +118,8 @@ public class VehicleController {
         }
     }
 
-    void saabTurboOff(){
+    @Override
+    public void saabTurboOff(){
         for(Vehicle vehicle : vehicles){
             if (vehicle instanceof Saab95){
                 ((Saab95) vehicle).setTurboOff();
@@ -135,7 +128,8 @@ public class VehicleController {
         }
     }
 
-    void scaniaRaiseRamp(){
+    @Override
+    public void scaniaRaiseRamp(){
         for (Vehicle vehicle : vehicles){
             if(vehicle instanceof Scania){
                 ((Scania) vehicle).raiseRamp();
@@ -143,11 +137,14 @@ public class VehicleController {
         }
     }
 
-    void scaniaLowerRamp(){
+    @Override
+    public void scaniaLowerRamp(){
         for (Vehicle vehicle : vehicles){
             if(vehicle instanceof Scania){
                 ((Scania) vehicle).lowerRamp();
             }
         }
     }
+
+
 }
