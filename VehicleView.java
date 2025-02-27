@@ -22,6 +22,8 @@ public class VehicleView extends JFrame{
 
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
+    ArrayList<String> list = new String();
+
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
