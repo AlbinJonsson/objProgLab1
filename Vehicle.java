@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Vehicle implements Movable{
     private int nrDoors; // Number of doors on the car
@@ -6,6 +7,9 @@ public abstract class Vehicle implements Movable{
     protected double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     private String modelName; // The car model name
+    private BufferedImage vehicleImage;
+
+    private Point location;
     private double x;
     private double y;
     private Direction currentDirection;
@@ -20,6 +24,9 @@ public abstract class Vehicle implements Movable{
         this.currentDirection = Direction.EAST;
     }
 
+    protected abstract void setImage();
+    public abstract BufferedImage getVehicleImage();
+
     public Direction getCurrentDirection(){
         return currentDirection;
     }
@@ -31,11 +38,11 @@ public abstract class Vehicle implements Movable{
         return enginePower;
     }
 
-    public double getCurrentYLocation(){
+    public double getY(){
         return y;
     }
 
-    public double getCurrentXLocation(){
+    public double getX(){
         return x;
     }
 

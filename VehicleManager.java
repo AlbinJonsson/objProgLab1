@@ -1,54 +1,61 @@
-import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class VehicleManager implements ClickListener, VehicleList {
+public class VehicleManager implements ClickListener{
 
     ArrayList<Vehicle> vehicles = new ArrayList<>();
     VehicleGarage<Volvo240> volvoWorkshop = new VehicleGarage<>(3);
+    ArrayList<VehicleObserver> observers = new ArrayList<>();
 
-    Point volvoPoint = new Point();
-    Point saabPoint = new Point();
-    Point scaniaPoint = new Point();
+    private final int delay = 50;
+    private Timer timer = new Timer(delay, new VehicleManager.TimerListener());
 
-    public static void main(String[] args) {
-        // Instance of this class
-        VehicleManager cc = new VehicleManager();
+    private class TimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            for (Vehicle vehicle : vehicles) {
+                vehicle.move();
+                notifyObservers();
 
-        cc.vehicles.add(new Volvo240());
-        cc.vehicles.add(new Saab95());
-        cc.vehicles.add(new Scania());
-
-        // Start a new view and send a reference of self
-        cc.frame = new VehicleView("VehicleSim 1.0", cc);
-
-        // Start the timer
-        cc.timer.start();
-    }
-
-    void moveit(int x, int y, Vehicle vehicletype){
-        if(vehicletype instanceof Volvo240){
-            volvoPoint.x = x;
-            volvoPoint.y = y + 50;
-        }
-        if(vehicletype instanceof Saab95){
-            saabPoint.x = x;
-            saabPoint.y = y + 150;
-        }
-        if(vehicletype instanceof Scania){
-            scaniaPoint.x = x;
-            scaniaPoint.y = y + 250;
+                invertCarIfAtEdge(vehicle);
+                parkVolvo();
+            }
         }
     }
 
-    @Override
-    public void invertCarIfAtEdge(Vehicle vehicle) {
+    private void notifyObservers() {
+
+        ArrayList<VehicleDTO> vehicleData = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            int x = (int) Math.round(vehicle.getX());
+            int y = (int) Math.round(vehicle.getY());
+            vehicleData.add(new VehicleDTO(x, y, vehicle.getVehicleImage()));
+        }
+        for(VehicleObserver observer: observers) {
+            observer.updateView(vehicleData);
+        }
+    }
+
+    public void addObserver(VehicleObserver o) {
+        observers.add(o);
+    }
+
+    public void removeObserver(VehicleObserver o) {
+        observers.remove(o);
+    }
+
+
+    public void startTimer() {
+        timer.start();
+    }
+
+    private void invertCarIfAtEdge(Vehicle vehicle) {
         if(isOutOfFrame(vehicle)){
             vehicle.invertDirection();
         }
     }
-
-    @Override
-    public void parkVolvo(){
+    private void parkVolvo(){
         for(Vehicle vehicle : vehicles){
             if(!isInRangeOfGarage(vehicle)){
                 return;
@@ -58,22 +65,18 @@ public class VehicleManager implements ClickListener, VehicleList {
                 volvoWorkshop.loadVehicle(((Volvo240) vehicle));
             }
         }
+    }
 
+    public void addVehicle(Vehicle vehicle) {
+        vehicles.add(vehicle);
     }
 
     private static boolean isInRangeOfGarage(Vehicle vehicle) {
-        return vehicle.getCurrentXLocation() > 285;
+        return vehicle.getX() > 285;
     }
-
 
     private static boolean isOutOfFrame(Vehicle vehicle) {
-        return vehicle.getCurrentXLocation() > 800 || vehicle.getCurrentXLocation() < 0;
-    }
-
-
-    @Override
-    public ArrayList<Vehicle> getVehicleList() {
-        return vehicles;
+        return vehicle.getX() > 800 || vehicle.getX() < 0;
     }
 
     @Override

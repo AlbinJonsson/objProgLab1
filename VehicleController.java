@@ -1,153 +1,182 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-/*
-* This class represents the Controller part in the MVC pattern.
-* It's responsibilities is to listen to the View and responds in a appropriate manner by
-* modifying the model state and the updating the view.
- */
+/**
+ * This class represents the full view of the MVC pattern of your car simulator.
+ * It initializes with being center on the screen and attaching it's controller in it's state.
+ * It communicates with the Controller by calling methods of it when an action fires of in
+ * each of it's components.
+ * TODO: Write more actionListeners and wire the rest of the buttons
+ **/
 
-public class VehicleController {
-    // member fields:
+public class VehicleController implements ComponentRetriever {
+    private static final int X = 800;
+    private static final int Y = 800;
 
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
+    private ArrayList<JComponent> components = new ArrayList<>();
 
-    // The frame that represents this instance View of the MVC pattern
-    VehicleView frame;
-    // A list of vehicles, modify if needed
-    ArrayList<Vehicle> vehicles = new ArrayList<>();
-    VehicleGarage<Volvo240> volvoWorkshop = new VehicleGarage<>(3);
+    ClickListener listener;
 
-    //methods:
 
-    public static void main(String[] args) {
-        // Instance of this class
-        VehicleController cc = new VehicleController();
+    JPanel controlPanel = new JPanel();
 
-        cc.vehicles.add(new Volvo240());
-        cc.vehicles.add(new Saab95());
-        cc.vehicles.add(new Scania());
+    JPanel gasPanel = new JPanel();
+    JSpinner gasSpinner = new JSpinner();
+    int gasAmount = 0;
+    JLabel gasLabel = new JLabel("Amount of gas");
 
-        // Start a new view and send a reference of self
-        cc.frame = new VehicleView("VehicleSim 1.0", cc);
+    JPanel brakePanel = new JPanel();
+    JSpinner brakeSpinner = new JSpinner();
+    int brakeAmount = 0;
+    JLabel brakeLabel = new JLabel("Amount of brake");
 
-        // Start the timer
-        cc.timer.start();
+
+    JButton gasButton = new JButton("Gas");
+    JButton brakeButton = new JButton("Brake");
+    JButton turboOnButton = new JButton("Saab Turbo on");
+    JButton turboOffButton = new JButton("Saab Turbo off");
+    JButton liftBedButton = new JButton("Scania Lift Bed");
+    JButton lowerBedButton = new JButton("Lower Lift Bed");
+
+    JButton startButton = new JButton("Start all cars");
+    JButton stopButton = new JButton("Stop all cars");
+
+    // Constructor
+    public VehicleController(){
+        initComponents();
     }
 
-    /* Each step the TimerListener moves all the vehicles in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            for (Vehicle vehicle : vehicles) {
-                vehicle.move();
-                int x = (int) Math.round(vehicle.getCurrentXLocation());
-                int y = (int) Math.round(vehicle.getCurrentYLocation());
-                frame.drawPanel.moveit(x, y, vehicle);
-                //repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
+    @Override
+    public ArrayList<JComponent> getPanels() {
+        return new ArrayList<JComponent>(Arrays.asList(gasPanel, brakePanel, controlPanel, startButton, stopButton));
+    }
 
-                invertCarIfAtEdge(vehicle);
-                parkVolvo();
+    private void initComponents() {
+
+        SpinnerModel spinnerModel =
+                new SpinnerNumberModel(0, //initial value
+                        0, //min
+                        100, //max
+                        1);//step
+        gasSpinner = new JSpinner(spinnerModel);
+        gasSpinner.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e)
+            {
+                gasAmount = (int) ((JSpinner)e.getSource()).getValue();
             }
-        }
-    }
+        });
 
-    private void invertCarIfAtEdge(Vehicle vehicle) {
-        if(isOutOfFrame(vehicle)){
-            vehicle.invertDirection();
-        }
-    }
-
-    private void parkVolvo(){
-        for(Vehicle vehicle : vehicles){
-            if(!isInRangeOfGarage(vehicle)){
-                return;
+        brakeSpinner.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e)
+            {
+                brakeAmount = (int) ((JSpinner)e.getSource()).getValue();
             }
-            if(vehicle instanceof Volvo240){
-                vehicle.stopEngine();
-                volvoWorkshop.loadVehicle(((Volvo240) vehicle));
+        });
+
+        gasPanel.setLayout(new BorderLayout());
+        gasPanel.add(gasLabel, BorderLayout.PAGE_START);
+        gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
+
+
+
+
+        brakePanel.setLayout(new BorderLayout());
+        brakePanel.add(brakeLabel, BorderLayout.PAGE_START);
+        brakePanel.add(brakeSpinner, BorderLayout.PAGE_END);
+
+
+        controlPanel.setLayout(new GridLayout(2,4));
+
+        controlPanel.add(gasButton, 0);
+        controlPanel.add(turboOnButton, 1);
+        controlPanel.add(liftBedButton, 2);
+        controlPanel.add(brakeButton, 3);
+        controlPanel.add(turboOffButton, 4);
+        controlPanel.add(lowerBedButton, 5);
+        controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
+
+        controlPanel.setBackground(Color.CYAN);
+
+
+        startButton.setBackground(Color.blue);
+        startButton.setForeground(Color.green);
+        startButton.setPreferredSize(new Dimension(X/5-15,200));
+
+
+
+        stopButton.setBackground(Color.red);
+        stopButton.setForeground(Color.black);
+        stopButton.setPreferredSize(new Dimension(X/5-15,200));
+
+        // This actionListener is for the gas button only
+        // TODO: Create more for each component as necessary
+        gasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                listener.gas(gasAmount);
             }
-        }
-    }
+        });
 
-    private static boolean isInRangeOfGarage(Vehicle vehicle) {
-        return vehicle.getCurrentXLocation() > 285;
-    }
-
-
-    private static boolean isOutOfFrame(Vehicle vehicle) {
-        return vehicle.getCurrentXLocation() > 800 || vehicle.getCurrentXLocation() < 0;
-    }
-
-
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Vehicle vehicle : vehicles
-                ) {
-            vehicle.gas(gas);
-        }
-    }
-
-    void brake(int amount) {
-        double brake = ((double) amount) / 100;
-        for (Vehicle vehicle : vehicles
-        ) {
-            vehicle.brake(brake);
-        }
-    }
-
-    void startEngine(){
-        for(Vehicle vehicle : vehicles){
-            vehicle.startEngine();
-        }
-    }
-
-    void stopEngine(){
-        for(Vehicle vehicle : vehicles){
-            vehicle.stopEngine();
-        }
-    }
-
-    void saabTurboOn(){
-        for(Vehicle vehicle : vehicles){
-            if (vehicle instanceof Saab95){
-                ((Saab95) vehicle).setTurboOn();
+        brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.brake(brakeAmount);
             }
+        });
 
-        }
-    }
-
-    void saabTurboOff(){
-        for(Vehicle vehicle : vehicles){
-            if (vehicle instanceof Saab95){
-                ((Saab95) vehicle).setTurboOff();
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                listener.startEngine();
             }
+        });
 
-        }
-    }
-
-    void scaniaRaiseRamp(){
-        for (Vehicle vehicle : vehicles){
-            if(vehicle instanceof Scania){
-                ((Scania) vehicle).raiseRamp();
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.stopEngine();
             }
-        }
+        });
+
+        turboOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.saabTurboOn();
+            }
+        });
+
+
+        turboOffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.saabTurboOff();
+            }
+        });
+
+        liftBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.scaniaRaiseRamp();
+            }
+        });
+
+        lowerBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.scaniaLowerRamp();
+            }
+        });
+
+
     }
 
-    void scaniaLowerRamp(){
-        for (Vehicle vehicle : vehicles){
-            if(vehicle instanceof Scania){
-                ((Scania) vehicle).lowerRamp();
-            }
-        }
-    }
+
 }

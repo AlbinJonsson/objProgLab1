@@ -1,15 +1,33 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Scania extends Truck {
 
     private int rampAngle;
     private AngledRamp ramp;
+    private BufferedImage image;
 
     public Scania() {
         super("Scania", Color.pink, 0, 200, 2);
         stopEngine();
         this.rampAngle = 0;
         this.ramp = new AngledRamp();
+    }
+
+    @Override
+    protected void setImage() {
+        try{
+            image = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public BufferedImage getVehicleImage() {
+        return image;
     }
 
     // Raise the ramp

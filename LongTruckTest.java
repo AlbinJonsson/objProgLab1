@@ -20,7 +20,7 @@ class LongTruckTest {
         truck.move();
         truck.move();
 
-        assertEquals(44, truck.getCurrentYLocation());
+        assertEquals(44, truck.getY());
     }
 
     @Test
@@ -86,7 +86,7 @@ class LongTruckTest {
         truck.move();
         truck.move();
 
-        assertEquals(volvo.getCurrentYLocation(), truck.getCurrentYLocation());
+        assertEquals(volvo.getY(), truck.getY());
     }
 
     @Test
@@ -248,7 +248,7 @@ class LongTruckTest {
         truck.loadVehicle(volvo);
 
         truck.unloadVehicle();
-        assertEquals(4, volvo.getCurrentXLocation());
+        assertEquals(4, volvo.getX());
     }
 
     @Test
@@ -259,7 +259,7 @@ class LongTruckTest {
         truck.loadVehicle(volvo);
 
         truck.unloadVehicle();
-        assertEquals(2, volvo.getCurrentYLocation());
+        assertEquals(2, volvo.getY());
     }
 
 

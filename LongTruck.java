@@ -1,15 +1,33 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class LongTruck extends Truck implements LoadableObject<Car> {
 
     private Car[] carsOnTruck;
     private ToggleRamp ramp;
+    private BufferedImage image;
 
 
     public LongTruck() {
         super("Long Hauler", Color.orange, 0, 250, 2);
         this.carsOnTruck = new Car[6];
         this.ramp = new ToggleRamp();
+    }
+
+    @Override
+    protected void setImage() {
+        try{
+            image = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public BufferedImage getVehicleImage() {
+        return image;
     }
 
 
@@ -26,7 +44,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
     }
 
     public boolean isCarWithinDistance(Car car){
-        double distance = Math.sqrt(Math.pow(car.getCurrentXLocation() - this.getCurrentXLocation(), 2) + Math.pow(car.getCurrentYLocation() - this.getCurrentYLocation(), 2));
+        double distance = Math.sqrt(Math.pow(car.getX() - this.getX(), 2) + Math.pow(car.getY() - this.getY(), 2));
         return distance <= 2.0;
     }
 
@@ -34,7 +52,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
 
         if (checkIfCarCanBeLoaded(car)) {
             carsOnTruck[getCurrentNrCars()] = car;
-            car.setPosition(this.getCurrentXLocation(), this.getCurrentYLocation());
+            car.setPosition(this.getX(), this.getY());
             car.setLoaded(true);
             return true;
         }else
@@ -47,7 +65,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
             Car car = carsOnTruck[getCurrentNrCars() -1];
             carsOnTruck[getCurrentNrCars() - 1] = null;
             car.setLoaded(false);
-            car.setPosition(this.getCurrentXLocation() + 4, this.getCurrentYLocation() + 2);
+            car.setPosition(this.getX() + 4, this.getY() + 2);
             return car;
         }else {
             return null;
@@ -64,7 +82,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
             for (int i = 0; i < getCurrentNrCars(); i++) {
                 Car car = carsOnTruck[i];
                 if (car != null){
-                    car.setPosition(this.getCurrentXLocation(), this.getCurrentYLocation());
+                    car.setPosition(this.getX(), this.getY());
                 }
             }
         }

@@ -90,7 +90,7 @@ class   VolvoTest {
         volvo.move();
         volvo.move();
 
-        assertEquals(50, volvo.getCurrentYLocation());
+        assertEquals(50, volvo.getY());
 
 
     }
@@ -106,7 +106,7 @@ class   VolvoTest {
         volvo.move();
         volvo.move();
 
-        assertEquals(50, volvo.getCurrentXLocation());
+        assertEquals(50, volvo.getX());
 
 
     }

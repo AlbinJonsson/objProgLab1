@@ -107,7 +107,7 @@ class SaabTest {
         saab95.move();
         saab95.move();
 
-        assertEquals(50, saab95.getCurrentYLocation());
+        assertEquals(50, saab95.getY());
 
 
     }
@@ -123,7 +123,7 @@ class SaabTest {
         saab95.move();
         saab95.move();
 
-        assertEquals(50, saab95.getCurrentXLocation());
+        assertEquals(50, saab95.getX());
     }
 
     @Test
