@@ -24,6 +24,7 @@ public class VehicleModelFacade implements ClickListener{
     }
 
 
+
     @Override
     public void gas(int amount) {
         vehicleManager.gas(amount);
@@ -62,5 +63,15 @@ public class VehicleModelFacade implements ClickListener{
     @Override
     public void scaniaLowerRamp() {
         vehicleManager.scaniaLowerRamp();
+    }
+
+    @Override
+    public void addRandomCar() {
+        vehicleManager.addRandomCar();
+    }
+
+    @Override
+    public void removeLastAddedCar() {
+        vehicleManager.removeLastAddedCar();
     }
 }

@@ -9,4 +9,8 @@ public interface ClickListener {
 
     public void scaniaRaiseRamp();
     public void scaniaLowerRamp();
+
+    public void addRandomCar();
+
+    public void removeLastAddedCar();
 }

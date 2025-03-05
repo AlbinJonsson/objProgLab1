@@ -19,7 +19,7 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
     @Override
     protected void setImage() {
         try{
-            image = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Scania.jpg"));
+            image = ImageIO.read(UpdateFrame.class.getResourceAsStream("pics/Scania.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

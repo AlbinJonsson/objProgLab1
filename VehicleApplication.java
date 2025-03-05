@@ -2,7 +2,6 @@ public class VehicleApplication {
 
 
     public static void main(String[] args) {
-        // Instance of this class
 
         VehicleModelFacade facade = new VehicleModelFacade();
         VehicleFactory factory = new VehicleFactory();

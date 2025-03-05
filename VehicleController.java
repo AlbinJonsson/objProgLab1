@@ -47,6 +47,9 @@ public class VehicleController implements ComponentRetriever {
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
 
+    JButton addRandomCar = new JButton("Add a random car");
+    JButton removeCar = new JButton("Remove the last added car");
+
     // Constructor
     public VehicleController(ClickListener model){
         this.listener = model;
@@ -55,7 +58,7 @@ public class VehicleController implements ComponentRetriever {
 
     @Override
     public ArrayList<JComponent> getPanels() {
-        return new ArrayList<JComponent>(Arrays.asList(gasPanel, brakePanel, controlPanel, startButton, stopButton));
+        return new ArrayList<JComponent>(Arrays.asList(gasPanel, brakePanel, controlPanel, startButton, stopButton, addRandomCar, removeCar));
     }
 
     private void initComponents() {
@@ -115,6 +118,14 @@ public class VehicleController implements ComponentRetriever {
         stopButton.setForeground(Color.black);
         stopButton.setPreferredSize(new Dimension(X/5-15,200));
 
+        addRandomCar.setBackground(Color.green);
+        addRandomCar.setForeground(Color.black);
+        addRandomCar.setPreferredSize(new Dimension(X/5-5,200));
+
+        removeCar.setBackground(Color.red);
+        removeCar.setForeground(Color.black);
+        removeCar.setPreferredSize(new Dimension(X/5-5,200));
+
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
         gasButton.addActionListener(new ActionListener() {
@@ -137,6 +148,22 @@ public class VehicleController implements ComponentRetriever {
             public void actionPerformed(ActionEvent e)
             {
                 listener.startEngine();
+            }
+        });
+
+        addRandomCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                listener.addRandomCar();
+            }
+        });
+
+        removeCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                listener.removeLastAddedCar();
             }
         });
 

@@ -4,15 +4,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VehicleGarage<T extends Vehicle> implements LoadableObject<T> {
+public class VehicleWorkshop<T extends Vehicle> implements LoadableObject<T> {
 
     private List<T> vehicles;
     private int capacity;
-    private BufferedImage workshopImage;
     private int x;
     private int y;
 
-    public VehicleGarage(int capacity, int x, int y) {
+    private BufferedImage workshopImage;
+
+    public VehicleWorkshop(int capacity, int x, int y) {
         this.capacity = capacity;
         this.vehicles = new ArrayList<>(capacity);
         this.x = x;
@@ -32,13 +33,13 @@ public class VehicleGarage<T extends Vehicle> implements LoadableObject<T> {
         return y;
     }
 
-    private void setImage(){
+    protected void setImage(){
         try{
-            workshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
+            workshopImage = ImageIO.read(UpdateFrame.class.getResourceAsStream("pics/VolvoBrand.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+    };
 
     public BufferedImage getWorkshopImage(){return workshopImage;}
 

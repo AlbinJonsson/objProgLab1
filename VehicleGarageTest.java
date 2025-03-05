@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VehicleGarageTest {
 
-    VehicleGarage<Vehicle> vehicleGarage;
+    VehicleWorkshop<Vehicle> vehicleGarage;
     @BeforeEach
     void setUp() {
-        vehicleGarage = new VehicleGarage(2, 10, 10);
+        vehicleGarage = new VolvoWorkshop(2, 10, 10);
     }
 
     @Test

@@ -8,11 +8,8 @@ public class UpdateFrame extends JPanel implements VehicleObserver {
 
     @Override
     public void updateView(ArrayList<drawableDTO> vehicleData) {
-        // Uppdatera vehicleData på EDT
-        SwingUtilities.invokeLater(() -> {
-            this.vehicleData = vehicleData;
-            repaint(); // Anropas nu på EDT
-        });
+        this.vehicleData = vehicleData;
+        repaint();
     }
 
     @Override
@@ -21,7 +18,6 @@ public class UpdateFrame extends JPanel implements VehicleObserver {
 
         if (vehicleData == null) return;
         for(drawableDTO v: vehicleData){
-            System.out.println(v.getVehicleImage());
             g.drawImage(v.getVehicleImage(), v.getX(), v.getY(), null);
         }
     }

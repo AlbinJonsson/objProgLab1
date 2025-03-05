@@ -6,8 +6,10 @@ import java.util.ArrayList;
 public class VehicleManager implements ClickListener{
 
     ArrayList<Vehicle> vehicles = new ArrayList<>();
-    VehicleGarage<Volvo240> volvoWorkshop = new VehicleGarage<>(3, 300, 0);
+    VolvoWorkshop volvoWorkshop = new VolvoWorkshop(3, 300, 0);
     ArrayList<VehicleObserver> observers = new ArrayList<>();
+    VehicleFactory factory = new VehicleFactory();
+
 
     private final int delay = 50;
     private Timer timer = new Timer(delay, new VehicleManager.TimerListener());
@@ -27,10 +29,13 @@ public class VehicleManager implements ClickListener{
     private void notifyObservers() {
 
         ArrayList<drawableDTO> vehicleData = new ArrayList<>();
+        int yOffset = 0;
+
         for (Vehicle vehicle : vehicles) {
             int x = (int) Math.round(vehicle.getX());
-            int y = (int) Math.round(vehicle.getY());
+            int y = (int) Math.round(vehicle.getY() + yOffset);
             vehicleData.add(new drawableDTO(x, y, vehicle.getVehicleImage()));
+            yOffset+= 100;
         }
         vehicleData.add(new drawableDTO(volvoWorkshop.getX(), volvoWorkshop.getY(), volvoWorkshop.getWorkshopImage()));
         for(VehicleObserver observer: observers) {
@@ -63,7 +68,7 @@ public class VehicleManager implements ClickListener{
             }
             if(vehicle instanceof Volvo240){
                 vehicle.stopEngine();
-                volvoWorkshop.loadVehicle(((Volvo240) vehicle));
+                volvoWorkshop.loadVehicle((vehicle));
             }
         }
     }
@@ -72,13 +77,21 @@ public class VehicleManager implements ClickListener{
         vehicles.add(vehicle);
     }
 
-    private static boolean isInRangeOfGarage(Vehicle vehicle) {
-        return vehicle.getX() > 285;
+    private boolean isInRangeOfGarage(Vehicle vehicle) {
+        if(!(vehicle.getX() > volvoWorkshop.getX())){
+            return false;
+        }
+        if(volvoWorkshop.getY() >= vehicle.getY() && vehicle.getY() >= volvoWorkshop.getY()){
+            return true;
+        }
+        return false;
+
     }
 
     private static boolean isOutOfFrame(Vehicle vehicle) {
         return vehicle.getX() > 800 || vehicle.getX() < 0;
     }
+
 
     @Override
     public void gas(int amount){
@@ -101,7 +114,9 @@ public class VehicleManager implements ClickListener{
     @Override
     public void startEngine(){
         for(Vehicle vehicle : vehicles){
-            vehicle.startEngine();
+            if(vehicle.isStandingStill()){
+                vehicle.startEngine();
+            }
         }
     }
 
@@ -148,6 +163,19 @@ public class VehicleManager implements ClickListener{
                 ((Scania) vehicle).lowerRamp();
             }
         }
+    }
+
+    @Override
+    public void addRandomCar() {
+        if(vehicles.size() >= 4){return;}
+        Vehicle randomVehicle = factory.createRandomVehicle();
+        addVehicle(randomVehicle);
+    }
+
+    @Override
+    public void removeLastAddedCar() {
+        if(vehicles.size() <= 0){return;}
+        vehicles.removeLast();
     }
 
 

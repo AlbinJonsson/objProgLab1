@@ -125,10 +125,13 @@ public abstract class Vehicle implements Movable{
     }
 
     protected void gas(double amount){
-        if (0 <= amount && amount <= 1){
-            incrementSpeed(amount);
-        }else
-            throw new IllegalArgumentException("Amount between 0 and 1");
+        if(!isStandingStill()){
+            if (0 <= amount && amount <= 1){
+                incrementSpeed(amount);
+            }else
+                throw new IllegalArgumentException("Amount between 0 and 1");
+        }
+
     }
 
 

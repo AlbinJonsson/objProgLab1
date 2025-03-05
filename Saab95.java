@@ -17,7 +17,7 @@ public class Saab95 extends Car{
     @Override
     protected void setImage() {
         try{
-            image = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Saab95.jpg"));
+            image = ImageIO.read(UpdateFrame.class.getResourceAsStream("pics/Saab95.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -17,7 +17,7 @@ public class Volvo240 extends Car{
     @Override
     protected void setImage() {
         try{
-            volvoImg = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
+            volvoImg = ImageIO.read(UpdateFrame.class.getResourceAsStream("pics/Volvo240.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

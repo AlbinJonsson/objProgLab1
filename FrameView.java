@@ -25,8 +25,6 @@ public class FrameView extends JFrame {
         updateFrame.setDoubleBuffered(true);
         updateFrame.setPreferredSize(new Dimension(X, Y-240));
         updateFrame.setBackground(Color.green);
-//        DrawPanel drawPanel = new DrawPanel(X, Y-240);
-//        this.add(drawPanel);
 
 
 
