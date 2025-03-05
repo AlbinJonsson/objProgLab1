@@ -15,14 +15,6 @@ public class DrawPanel extends JPanel{
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
-
-        try {
-            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
-
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
     }
 
 

@@ -24,9 +24,7 @@ public class Volvo240 extends Car{
     }
 
     @Override
-    public BufferedImage getVehicleImage() {
-        return volvoImg;
-    }
+    public BufferedImage getVehicleImage() {return volvoImg;}
 
     @Override
     public double speedFactor(){

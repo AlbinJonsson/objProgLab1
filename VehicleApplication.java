@@ -6,7 +6,7 @@ public class VehicleApplication {
 
         VehicleModelFacade facade = new VehicleModelFacade();
         VehicleFactory factory = new VehicleFactory();
-        VehicleController controller = new VehicleController();
+        VehicleController controller = new VehicleController(facade);
         FrameView view = new FrameView(controller);
         UpdateFrame updateFrame = new UpdateFrame();
 
@@ -21,7 +21,7 @@ public class VehicleApplication {
 
         facade.addObserver(updateFrame);
 
-        view.initFrame("Vehicle Simulator");
+        view.initFrame("Vehicle Simulator", updateFrame);
 
         // Start the timer
         facade.startTimer();

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class VehicleManager implements ClickListener{
 
     ArrayList<Vehicle> vehicles = new ArrayList<>();
-    VehicleGarage<Volvo240> volvoWorkshop = new VehicleGarage<>(3);
+    VehicleGarage<Volvo240> volvoWorkshop = new VehicleGarage<>(3, 300, 0);
     ArrayList<VehicleObserver> observers = new ArrayList<>();
 
     private final int delay = 50;
@@ -26,12 +26,13 @@ public class VehicleManager implements ClickListener{
 
     private void notifyObservers() {
 
-        ArrayList<VehicleDTO> vehicleData = new ArrayList<>();
+        ArrayList<drawableDTO> vehicleData = new ArrayList<>();
         for (Vehicle vehicle : vehicles) {
             int x = (int) Math.round(vehicle.getX());
             int y = (int) Math.round(vehicle.getY());
-            vehicleData.add(new VehicleDTO(x, y, vehicle.getVehicleImage()));
+            vehicleData.add(new drawableDTO(x, y, vehicle.getVehicleImage()));
         }
+        vehicleData.add(new drawableDTO(volvoWorkshop.getX(), volvoWorkshop.getY(), volvoWorkshop.getWorkshopImage()));
         for(VehicleObserver observer: observers) {
             observer.updateView(vehicleData);
         }

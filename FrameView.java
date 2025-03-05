@@ -12,18 +12,21 @@ public class FrameView extends JFrame {
         this.componentRetriever = componentRetriever;
     }
 
-    public void initFrame(String title) {
+    public void initFrame(String title, UpdateFrame updateFrame) {
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X, Y));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-        DrawPanel drawPanel = new DrawPanel(X, Y-240);
-        this.add(drawPanel);
+
 
 
         //Fungerar just nu inte att uppdatera fönstret
-        //UpdateFrame updateFrame = new UpdateFrame();
-        //this.add(updateFrame);
+        this.add(updateFrame);
+        updateFrame.setDoubleBuffered(true);
+        updateFrame.setPreferredSize(new Dimension(X, Y-240));
+        updateFrame.setBackground(Color.green);
+//        DrawPanel drawPanel = new DrawPanel(X, Y-240);
+//        this.add(drawPanel);
 
 
 

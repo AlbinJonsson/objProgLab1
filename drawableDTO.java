@@ -1,12 +1,11 @@
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class VehicleDTO {
+public class drawableDTO {
     private final int x;
     private final int y;
     private final BufferedImage vehicleImage;
 
-    public VehicleDTO(int x, int y, BufferedImage vehicleImage) {
+    public drawableDTO(int x, int y, BufferedImage vehicleImage) {
         this.x = x;
         this.y = y;
         this.vehicleImage = vehicleImage;

@@ -8,7 +8,7 @@ class VehicleGarageTest {
     VehicleGarage<Vehicle> vehicleGarage;
     @BeforeEach
     void setUp() {
-        vehicleGarage = new VehicleGarage(2);
+        vehicleGarage = new VehicleGarage(2, 10, 10);
     }
 
     @Test

@@ -1,14 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class UpdateFrame extends JPanel implements VehicleObserver {
 
-    private ArrayList<VehicleDTO> vehicleData;
+    private ArrayList<drawableDTO> vehicleData;
 
     @Override
-    public void updateView(ArrayList<VehicleDTO> vehicleData) {
+    public void updateView(ArrayList<drawableDTO> vehicleData) {
         // Uppdatera vehicleData på EDT
         SwingUtilities.invokeLater(() -> {
             this.vehicleData = vehicleData;
@@ -19,7 +18,10 @@ public class UpdateFrame extends JPanel implements VehicleObserver {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for(VehicleDTO v: vehicleData){
+
+        if (vehicleData == null) return;
+        for(drawableDTO v: vehicleData){
+            System.out.println(v.getVehicleImage());
             g.drawImage(v.getVehicleImage(), v.getX(), v.getY(), null);
         }
     }

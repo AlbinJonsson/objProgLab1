@@ -48,7 +48,8 @@ public class VehicleController implements ComponentRetriever {
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public VehicleController(){
+    public VehicleController(ClickListener model){
+        this.listener = model;
         initComponents();
     }
 

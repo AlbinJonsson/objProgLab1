@@ -22,6 +22,7 @@ public abstract class Vehicle implements Movable{
         this.enginePower = enginePower;
         this.nrDoors = nrDoors;
         this.currentDirection = Direction.EAST;
+        setImage();
     }
 
     protected abstract void setImage();
