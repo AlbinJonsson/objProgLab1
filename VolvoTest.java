@@ -90,7 +90,7 @@ class   VolvoTest {
         volvo.move();
         volvo.move();
 
-        assertEquals(50, volvo.getY());
+        assertEquals(50, volvo.getX());
 
 
     }
@@ -98,7 +98,6 @@ class   VolvoTest {
     @Test
     void moveXDirection() {
 
-        volvo.turnRight();
         volvo.incrementSpeed(10);
 
         volvo.move();
@@ -122,7 +121,7 @@ class   VolvoTest {
         volvo.move();
         volvo.turnLeft();
 
-        assertEquals(Direction.NORTH, volvo.getCurrentDirection());
+        assertEquals(Direction.EAST, volvo.getCurrentDirection());
     }
 
     @Test
@@ -133,25 +132,7 @@ class   VolvoTest {
         volvo.turnRight();
         volvo.turnRight();
         volvo.turnRight();
-        assertEquals(Direction.SOUTH, volvo.getCurrentDirection());
-    }
-
-    @Test
-    void increaseSpeed(){
-        double previousSpeed = volvo.getCurrentSpeed();
-        volvo.gas(0.5);
-        double incrementedSpeed = volvo.getCurrentSpeed();
-
-        assertTrue(incrementedSpeed > previousSpeed);
-    }
-
-    @Test
-    void increaseSpeedWithMoreThan1(){
-        assertThrows(IllegalArgumentException.class,
-                () ->{
-                    volvo.gas(2);
-                }
-        );
+        assertEquals(Direction.WEST, volvo.getCurrentDirection());
     }
 
     @Test

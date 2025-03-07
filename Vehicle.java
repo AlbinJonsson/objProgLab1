@@ -94,7 +94,6 @@ public abstract class Vehicle implements Movable{
 
     @Override
     public void move() {
-
         switch (this.currentDirection) {
 
             case NORTH -> y += this.currentSpeed;

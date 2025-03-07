@@ -13,14 +13,18 @@ class LongTruckTest {
 
     @Test
     void move() {
+        truck.startEngine();
         truck.incrementSpeed(10);
 
+
+
+
         truck.move();
         truck.move();
         truck.move();
         truck.move();
 
-        assertEquals(44, truck.getY());
+        assertEquals(44.4, truck.getX());
     }
 
     @Test

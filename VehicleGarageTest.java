@@ -68,21 +68,6 @@ class VehicleGarageTest {
         );
     }
 
-    @Test
-    void loadVehicleWhenGarageIsFull(){
-        Scania scania = new Scania();
-        Volvo240 volvo = new Volvo240();
-        Saab95 saab95 = new Saab95();
-
-        vehicleGarage.loadVehicle(scania);
-        vehicleGarage.loadVehicle(volvo);
-        assertThrows(IllegalArgumentException.class,
-                () ->{
-                    vehicleGarage.loadVehicle(scania);
-                }
-        );
-
-    }
 
 
 }

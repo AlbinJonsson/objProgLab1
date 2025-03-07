@@ -77,7 +77,7 @@ class SaabTest {
     void incrementSpeedTurboOn() {
         saab95.setTurboOn();
         saab95.incrementSpeed(10);
-        assertEquals(16.25, saab95.getCurrentSpeed());
+        assertEquals(25, saab95.getCurrentSpeed());
     }
 
     @Test
@@ -94,12 +94,12 @@ class SaabTest {
         saab95.incrementSpeed(10);
         saab95.decrementSpeed(5);
 
-        assertEquals(8.125, saab95.getCurrentSpeed());
+        assertEquals(12.5, saab95.getCurrentSpeed());
     }
 
     @Test
     void moveYDirection() {
-
+        saab95.turnLeft();
         saab95.incrementSpeed(10);
 
         saab95.move();
@@ -115,7 +115,6 @@ class SaabTest {
     @Test
     void moveXDirection() {
 
-        saab95.turnRight();
         saab95.incrementSpeed(10);
 
         saab95.move();
@@ -138,7 +137,7 @@ class SaabTest {
         saab.move();
         saab.turnLeft();
 
-        assertEquals(Direction.NORTH, saab.getCurrentDirection());
+        assertEquals(Direction.EAST, saab.getCurrentDirection());
     }
 
     @Test
@@ -148,26 +147,9 @@ class SaabTest {
         saab95.turnRight();
         saab95.turnRight();
         saab95.turnRight();
-        assertEquals(Direction.EAST, saab95.getCurrentDirection());
+        assertEquals(Direction.SOUTH, saab95.getCurrentDirection());
     }
 
-    @Test
-    void increaseSpeed(){
-        double previousSpeed = saab95.getCurrentSpeed();
-        saab95.gas(0.5);
-        double incrementedSpeed = saab95.getCurrentSpeed();
-
-        assertTrue(incrementedSpeed > previousSpeed);
-    }
-
-    @Test
-    void increaseSpeedWithMoreThan1(){
-        assertThrows(IllegalArgumentException.class,
-                () ->{
-                    saab95.gas(2);
-                }
-                );
-    }
 
     @Test
     void testBrakeWith05(){

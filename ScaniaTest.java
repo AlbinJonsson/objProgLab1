@@ -39,7 +39,7 @@ class ScaniaTest {
         scania.move();
         scania.move();
 
-        assertEquals(48, scania.getY());
+        assertEquals(48, scania.getX());
     }
 
     @Test
