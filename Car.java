@@ -4,7 +4,7 @@ public abstract class Car extends Vehicle{
 
     private boolean isLoaded;
 
-    public Car(String modelName, Color color, double currentSpeed, double enginePower, int nrDoors) {
+    public Car(VehicleType modelName, Color color, double currentSpeed, double enginePower, int nrDoors) {
         super(modelName, color, currentSpeed, enginePower, nrDoors);
     }
 

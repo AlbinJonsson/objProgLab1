@@ -1,15 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class UpdateFrame extends JPanel implements VehicleObserver {
 
     private ArrayList<drawableDTO> vehicleData;
+    private ResourceManager resourceManager;
+
+    // Konstruktor som tar emot en ResourceManager
+    public UpdateFrame(ResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
+    }
 
     @Override
     public void updateView(ArrayList<drawableDTO> vehicleData) {
         this.vehicleData = vehicleData;
-        repaint();
+        repaint(); // Uppdaterar vyn
     }
 
     @Override
@@ -17,8 +24,13 @@ public class UpdateFrame extends JPanel implements VehicleObserver {
         super.paintComponent(g);
 
         if (vehicleData == null) return;
-        for(drawableDTO v: vehicleData){
-            g.drawImage(v.getVehicleImage(), v.getX(), v.getY(), null);
+
+        // Rita varje fordon med hjälp av ResourceManager
+        for (drawableDTO v : vehicleData) {
+            BufferedImage image = resourceManager.getImage(v.getVehicleType());
+            if (image != null) {
+                g.drawImage(image, v.getX(), v.getY(), null);
+            }
         }
     }
 }

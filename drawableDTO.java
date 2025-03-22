@@ -1,14 +1,15 @@
 import java.awt.image.BufferedImage;
+import java.beans.VetoableChangeListener;
 
 public class drawableDTO {
     private final int x;
     private final int y;
-    private final BufferedImage vehicleImage;
+    private final VehicleType vehicleType;
 
-    public drawableDTO(int x, int y, BufferedImage vehicleImage) {
+    public drawableDTO(int x, int y, VehicleType vehicleType) {
         this.x = x;
         this.y = y;
-        this.vehicleImage = vehicleImage;
+        this.vehicleType = vehicleType;
     }
 
     public int getX() {
@@ -19,7 +20,7 @@ public class drawableDTO {
         return y;
     }
 
-    public BufferedImage getVehicleImage() {
-        return vehicleImage;
+    public VehicleType getVehicleType() {
+        return vehicleType;
     }
 }

@@ -7,28 +7,16 @@ public class Scania extends Truck {
 
     private int rampAngle;
     private AngledRamp ramp;
-    private BufferedImage image;
 
     public Scania() {
-        super("Scania", Color.pink, 0, 200, 2);
+        super(VehicleType.SCANIA, Color.pink, 0, 200, 2);
         stopEngine();
         this.rampAngle = 0;
         this.ramp = new AngledRamp();
     }
 
     @Override
-    protected void setImage() {
-        try{
-            image = ImageIO.read(UpdateFrame.class.getResourceAsStream("pics/Scania.jpg"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public BufferedImage getVehicleImage() {
-        return image;
-    }
+    public VehicleType getVehicleType() {return VehicleType.SCANIA;}
 
     // Raise the ramp
     public void raiseRamp(){

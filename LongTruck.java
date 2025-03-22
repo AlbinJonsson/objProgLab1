@@ -7,28 +7,17 @@ public class LongTruck extends Truck implements LoadableObject<Car> {
 
     private Car[] carsOnTruck;
     private ToggleRamp ramp;
-    private BufferedImage image;
 
 
     public LongTruck() {
-        super("Long Hauler", Color.orange, 0, 250, 2);
+        super(VehicleType.SCANIA, Color.orange, 0, 250, 2);
         this.carsOnTruck = new Car[6];
         this.ramp = new ToggleRamp();
     }
 
     @Override
-    protected void setImage() {
-        try{
-            image = ImageIO.read(UpdateFrame.class.getResourceAsStream("pics/Scania.jpg"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public VehicleType getVehicleType() {return VehicleType.SCANIA;}
 
-    @Override
-    public BufferedImage getVehicleImage() {
-        return image;
-    }
 
 
     public void raiseRamp(){

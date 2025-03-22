@@ -34,10 +34,10 @@ public class VehicleManager implements ClickListener{
         for (Vehicle vehicle : vehicles) {
             int x = (int) Math.round(vehicle.getX());
             int y = (int) Math.round(vehicle.getY() + yOffset);
-            vehicleData.add(new drawableDTO(x, y, vehicle.getVehicleImage()));
+            vehicleData.add(new drawableDTO(x, y, vehicle.getVehicleType()));
             yOffset+= 100;
         }
-        vehicleData.add(new drawableDTO(volvoWorkshop.getX(), volvoWorkshop.getY(), volvoWorkshop.getWorkshopImage()));
+        vehicleData.add(new drawableDTO(volvoWorkshop.getX(), volvoWorkshop.getY(), volvoWorkshop.getVehicleType()));
         for(VehicleObserver observer: observers) {
             observer.updateView(vehicleData);
         }

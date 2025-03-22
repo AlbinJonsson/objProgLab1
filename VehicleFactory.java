@@ -4,15 +4,15 @@ public class VehicleFactory {
 
     private final Random random = new Random();
 
-    public Vehicle createVolvo() {
+    public static Vehicle createVolvo() {
         return new Volvo240();
     }
 
-    public Vehicle createSaab() {
+    public static Vehicle createSaab() {
         return new Saab95();
     }
 
-    public Vehicle createScania() {
+    public static Vehicle createScania() {
         return new Scania();
     }
 

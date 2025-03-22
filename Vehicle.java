@@ -6,7 +6,7 @@ public abstract class Vehicle implements Movable{
     protected double enginePower; // Engine power of the car
     protected double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
-    private String modelName; // The car model name
+    private VehicleType modelName; // The car model name
     private BufferedImage vehicleImage;
 
     private Point location;
@@ -15,18 +15,16 @@ public abstract class Vehicle implements Movable{
     private Direction currentDirection;
 
 
-    public Vehicle(String modelName, Color color, double currentSpeed, double enginePower, int nrDoors) {
+    public Vehicle(VehicleType modelName, Color color, double currentSpeed, double enginePower, int nrDoors) {
         this.modelName = modelName;
         this.color = color;
         this.currentSpeed = currentSpeed;
         this.enginePower = enginePower;
         this.nrDoors = nrDoors;
         this.currentDirection = Direction.EAST;
-        setImage();
     }
 
-    protected abstract void setImage();
-    public abstract BufferedImage getVehicleImage();
+    public abstract VehicleType getVehicleType();
 
     public Direction getCurrentDirection(){
         return currentDirection;

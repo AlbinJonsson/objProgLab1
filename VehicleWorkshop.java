@@ -11,14 +11,11 @@ public class VehicleWorkshop<T extends Vehicle> implements LoadableObject<T> {
     private int x;
     private int y;
 
-    private BufferedImage workshopImage;
-
     public VehicleWorkshop(int capacity, int x, int y) {
         this.capacity = capacity;
         this.vehicles = new ArrayList<>(capacity);
         this.x = x;
         this.y = y;
-        setImage();
     }
 
     public int getCurrentNrOfVehicle() {
@@ -33,15 +30,7 @@ public class VehicleWorkshop<T extends Vehicle> implements LoadableObject<T> {
         return y;
     }
 
-    protected void setImage(){
-        try{
-            workshopImage = ImageIO.read(UpdateFrame.class.getResourceAsStream("pics/VolvoBrand.jpg"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    };
-
-    public BufferedImage getWorkshopImage(){return workshopImage;}
+    public VehicleType getVehicleType(){return VehicleType.WORKSHOP;}
 
     @Override
     public boolean loadVehicle(T vehicle) {

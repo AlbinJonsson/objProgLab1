@@ -7,7 +7,8 @@ public class VehicleApplication {
         VehicleFactory factory = new VehicleFactory();
         VehicleController controller = new VehicleController(facade);
         FrameView view = new FrameView(controller);
-        UpdateFrame updateFrame = new UpdateFrame();
+        ResourceManager manager = new ResourceManager();
+        UpdateFrame updateFrame = new UpdateFrame(manager);
 
 
         Vehicle volvo = factory.createVolvo();
